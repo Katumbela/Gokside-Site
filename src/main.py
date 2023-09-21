@@ -187,6 +187,13 @@ def login():
 def perfil():
     return render_template('dashboard.html', user=current_user)
 
+
+@app.route('/user/dash_email')
+# @login_required
+def dash_email():
+    return render_template('dash_email.html', user=current_user)
+
+
 @app.route('/user/logout')
 @login_required
 def logout():
