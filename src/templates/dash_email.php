@@ -1,0 +1,310 @@
+<?php
+    session_start();
+    include("./php/header");
+
+    if (isset($_SESSION['id'])) {
+
+        $id =  $_SESSION['id'];
+            
+        $logg= "SELECT * FROM cadastro WHERE id = 4";
+        $con_logg = $conexao->query($logg);
+        $num_rll = mysqli_num_rows($con_logg);
+
+                $log_datass = mysqli_fetch_array($con_logg);
+                $nome= $log_datass['nome']; 
+                $email= $log_datass['email'];
+                $senha= $log_datass['senha'];
+                $tel= $log_datass['tel'];
+                $pac= $log_datass['pacote'];
+                $pago= $log_datass['pago'];
+                $empresa= $log_datass['empresa'];
+                $api = $log_datass['api_key'];
+        }
+
+        else {
+            #header("location: login.php?ref=exp");
+        }
+
+        switch ($pac) {
+            case 1:
+                $pacote = "Plano Individual";
+                $preco = 2.00;
+                break;
+            
+            case 2:
+                $pacote = "Plano Business";
+                $preco = 5.00;
+                break;
+            
+            case 3:
+                $pacote = "Plano Kat";
+                $preco = 10.00;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+            
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Dashboard <?=$empresa?> | Gokside </title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons
+    <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+ -->
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: Arsha
+  * Updated: Jul 05 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top header-inner-pages">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a href="dashboard">G o k s i d e</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="/" class="logo me-auto"><img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto"><?=$nome?></a></li>
+                    <li><a class="nav-link scrollto"><?=$pacote?></a></li>
+                    <li><a class="getstarted scrollto" href="./func/logout">Sair</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <main id="main">
+
+   
+        <!-- ======= Breadcrumbs ======= -->
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+
+            <h2>Benvindo  <?=explode( " ", $nome)[0] ?>. </h2>
+                <h6 class="fs-6 ">Empresa: <b><?=$empresa?></b> </h6>
+                <span class="fs-6 "> Ativo: <span class="<?php if ($pago == "Nao") {
+                    echo "text-warning";
+                } else { echo "text-success" ;} ?>"><?=$pacote?></span></span>
+                <br> 
+                <span class="fs-6 text-secondary">
+                     <?php if ($pago == "Nao") {
+                    echo "Faça o pagamento do seu plano! &middot; $ ".$preco."";
+                } else { echo "Plano Pago" ;} ?>
+             
+                </span>
+                  <br>
+
+                <div class="datas">
+                    <h4 class="text-secondary">API Key: <span class="fw-light"><?=$api?></span></h4>
+                </div>
+            </div>
+        </section><!-- End Breadcrumbs -->
+  
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container" data-aos="fade-up">
+      
+      <div>
+        <label for="" class="text-secondary fs-6">Envie partir do seu website/app</label>
+        
+<input type="text" disabled value="https://api.Gokside.site/v1/email/send?from=email&msg=msg&key=API_KEY" class="form-control">
+ 
+      </div>
+      <br>
+      <br>
+      <div class="section-title">
+          <h2>Templates</h2>
+          <p>Olá <?=explode(" ", $nome)[0]?>, Escolha um template. clique no template para editar e enviar para seus clientes</p>
+        </div>
+
+        <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">Todos</li>
+          <li data-filter=".filter-prod">Produto</li>
+          <li data-filter=".filter-card">Inscrição</li>
+          <li data-filter=".filter-info">Informativo</li>
+        </ul>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-prod">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-1.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 1</h4>
+              <p>App</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-1.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-info">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-2.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-2.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-prod">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-3.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 2</h4>
+              <p>App</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-3.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-4.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 2</h4>
+              <p>Card</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-4.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-info">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-5.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 2</h4>
+              <p>Web</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-5.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-prod">
+            <div  onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-6.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>App 3</h4>
+              <p>App</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-6.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 1</h4>
+              <p>Card</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-7.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-8.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Card 3</h4>
+              <p>Card</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-8.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-info">
+            <div onclick="link('edit_send')" class="portfolio-img"><img src="{{ url_for('static', filename='assets/img/portfolio/portfolio-9.jpg') }}" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <a href="{{ url_for('static', filename='assets/img/portfolio/portfolio-9.jpg') }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+              <a  class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section> <!-- End Portfolio Section -->
+
+    </main><!-- End #main -->
+
+    <div id="preloader"></div>
+    <a href="/#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+    <!-- Link do paypal 
+  <div id="paypal-button-container-P-23794522DV3935435MS55BBQ"></div>
+   -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=Achki2KvbRpWCbc-y41bd-5RHsf0SLC6NDJMrPktXH0Q-QcrUP4Te7nZLw9UC3JwAozTRD1zyleZQV5J&vault=true&intent=subscription"
+        data-sdk-integration-source="button-factory"></script>
+    <script>
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'blue',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function (data, actions) {
+                return actions.subscription.create({
+                    /* Creates the subscription */
+                    plan_id: 'P-23794522DV3935435MS55BBQ'
+                });
+            },
+            onApprove: function (data, actions) {
+                alert(data.subscriptionID); // You can add optional success message for the subscriber here
+            }
+        }).render('#paypal-button-container-P-23794522DV3935435MS55BBQ'); // Renders the PayPal button
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emails</title>
+</head>
+<body>
+    <h1>E-mails recentes de nao-responda@katoo.site </h1>
+    <ul>
+        {% for email in emails %}
+            <li>
+                <strong>Subject:</strong> {{ email.subject }}<br>
+                <strong>Body:</strong><br>
+                <pre>{{ email.body }}</pre>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

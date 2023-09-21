@@ -1,0 +1,119 @@
+[2023-09-21 11:01:53,633] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:03:32,614] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 19, in read_emails
+    mail.login(self.email_address, self.password)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/imaplib.py", line 612, in login
+    raise self.error(dat[-1])
+imaplib.IMAP4.error: b'[AUTHENTICATIONFAILED] Invalid credentials (Failure)'
+[2023-09-21 11:03:39,459] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 19, in read_emails
+    mail.login(self.email_address, self.password)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/imaplib.py", line 612, in login
+    raise self.error(dat[-1])
+imaplib.IMAP4.error: b'[AUTHENTICATIONFAILED] Invalid credentials (Failure)'
+[2023-09-21 11:03:47,610] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 19, in read_emails
+    mail.login(self.email_address, self.password)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/imaplib.py", line 612, in login
+    raise self.error(dat[-1])
+imaplib.IMAP4.error: b'[AUTHENTICATIONFAILED] Invalid credentials (Failure)'
+[2023-09-21 11:04:16,044] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 19, in read_emails
+    mail.login(self.email_address, self.password)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/imaplib.py", line 612, in login
+    raise self.error(dat[-1])
+imaplib.IMAP4.error: b'[AUTHENTICATIONFAILED] Invalid credentials (Failure)'
+[2023-09-21 11:04:22,856] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:11:23,017] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:12:51,623] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:14:20,426] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:16:25,099] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:19:44,976] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:20:47,237] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:21:53,080] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:21:53,080] INFO sLogger Email_Read_IMAP read_emails "No email found in selected dates."
+[2023-09-21 11:22:09,438] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:22:09,440] INFO sLogger Email_Read_IMAP read_emails "No email found in selected dates."
+[2023-09-21 11:24:50,768] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:28:44,002] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:28:44,269] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 39, in read_emails
+    msg = email.message_from_string(raw_email)
+          ^^^^^
+NameError: name 'email' is not defined
+[2023-09-21 11:31:35,126] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:33:25,309] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:33:25,864] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 50, in read_emails
+    self.emails.append({"subject": subject, "body": body})
+    ^^^^^^^^^^^
+AttributeError: 'EmailRead' object has no attribute 'emails'
+[2023-09-21 11:34:03,443] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:34:03,722] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 50, in read_emails
+    self.emails.append({"subject": subject, "body": body})
+    ^^^^^^^^^^^
+AttributeError: 'EmailRead' object has no attribute 'emails'
+[2023-09-21 11:37:22,191] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:37:47,890] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:37:48,174] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 41, in read_emails
+    bod = body_match.group(1)
+          ^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'group'
+[2023-09-21 11:38:07,278] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:39:46,810] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:39:47,122] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label."
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 37, in read_emails
+    msg = email.message_from_bytes(raw_email)
+          ^^^^^
+NameError: name 'email' is not defined
+[2023-09-21 11:45:29,997] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:45:30,313] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label: name 'email' is not defined"
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 41, in read_emails
+    msg = email.message_from_bytes(raw_email)
+          ^^^^^
+NameError: name 'email' is not defined
+[2023-09-21 11:46:10,040] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:46:10,349] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label: name 'decode_header' is not defined"
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 44, in read_emails
+    subject, encoding = decode_header(msg["Subject"])[0]
+                        ^^^^^^^^^^^^^
+NameError: name 'decode_header' is not defined
+[2023-09-21 11:46:39,647] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:46:39,947] ERROR sLogger Email_Read_IMAP read_emails "Error in reading your "Inbox" label: not enough values to unpack (expected 2, got 1)"
+Traceback (most recent call last):
+  File "/Users/katumbela/Downloads/Gmail_Inbox_Read-master/src/Email_Read_IMAP.py", line 45, in read_emails
+    subject, encoding = decode_header(msg["Subject"])[0]
+    ^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[2023-09-21 11:47:06,146] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:48:20,396] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:48:32,625] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:49:05,544] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 11:49:48,714] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:01:42,638] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:02:21,682] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:02:27,184] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:11:25,312] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:15:51,506] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:16:22,001] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:20:04,659] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:21:03,211] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:21:12,116] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:22:57,867] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:30:58,857] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:33:08,463] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:53:24,684] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 12:55:42,394] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
