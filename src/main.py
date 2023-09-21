@@ -140,23 +140,11 @@ def inbox():
     data = r1.read_emails()
     return render_template('inbox.html', emails=data)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        senha = request.form['senha']
-        user = User.query.filter_by(email=email).first()
-        if user and check_password_hash(user.senha_hash, senha):
-            login_user(user)
-            flash('Login bem-sucedido!', 'success')
-            return redirect(url_for('user/dashboard'))
-        else:
-            flash('Credenciais inválidas. Por favor, tente novamente.', 'danger')
-    return render_template('login.html')
 
 
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
@@ -174,9 +162,23 @@ def profile(user_id):
     return render_template('profile.html', user=user)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.senha_hash, senha):
+            login_user(user)
+            flash('Login bem-sucedido!', 'success')
+            return redirect(url_for('perfil'))
+        else:
+            flash('Credenciais   inválidas.   Por favor,   tente novamente.', 'danger')
+    return render_template('login.html')
+
 
 @app.route('/user/dashboard')
-@login_required
+# @login_required
 def perfil():
     return render_template('dashboard.html', user=current_user)
 
