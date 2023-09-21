@@ -259,5 +259,5 @@
 
 
 function link(l) {
-  window.location.href = l+'.php';
+  window.location.href = l;
 }
