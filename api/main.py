@@ -48,7 +48,7 @@ login_manager.login_view = 'login'
 #     return 'Banco de dados criado com sucesso!'
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     
     senha_hash = db.Column(db.String(220), nullable=False)
     senha = db.Column(db.String(220), nullable=False)
@@ -214,6 +214,6 @@ def register():
 
 
 if __name__ == '__main__':
-   with app.app_context():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
