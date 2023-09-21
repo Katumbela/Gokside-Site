@@ -117,3 +117,5 @@ ValueError: not enough values to unpack (expected 2, got 1)
 [2023-09-21 12:33:08,463] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
 [2023-09-21 12:53:24,684] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
 [2023-09-21 12:55:42,394] INFO sLogger Email_Read_IMAP read_emails "Processing mailbox..."
+[2023-09-21 15:13:00,279] INFO sLogger main read_emails "Processing mailbox..."
+[2023-09-21 15:15:25,119] INFO sLogger main read_emails "Processing mailbox..."
