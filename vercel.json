@@ -1,15 +1,9 @@
 {
-    "builds": [
-        {
-            "src":"src/main2.py",
-            "use":"@vercel/python"
-        }
-    ],
-    
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/main2.py"
+            "dest": "src/main2.py",
+            "methods":["POST","GET"]
         }
     ]
 }
