@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard <?=$empresa?> | Gokside  </title>
+    <title>Dashboard {{ user.empresa }} | Gokside  </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -53,9 +53,9 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto"><?=$nome?></a></li>
-                    <li><a class="nav-link scrollto"><?=$pacote?></a></li>
-                    <li><a class="getstarted scrollto" href="./func/logout">Sair</a></li>
+                    <li><a class="nav-link scrollto">{{user.nome}}</a></li>
+                    <li><a class="nav-link scrollto">{{user.pacote }}</a></li>
+                    <li><a class="getstarted scrollto" href="./logout">Sair</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -70,11 +70,9 @@
             <div class="container">
 
 
-            <h2>Benvindo  <?=explode( " ", $nome)[0] ?>. </h2>
-                <h6 class="fs-6 ">Empresa: <b><?=$empresa?></b> </h6>
-                <span class="fs-6 "> Ativo: <span class="<?php if ($pago == "Nao") {
-                    echo "text-warning";
-                } else { echo "text-success" ;} ?>"><?=$pacote?></span></span>
+            <h2>Benvindo  {{user.nome}}. </h2>
+                <h6 class="fs-6 ">Empresa: <b>{{ user.empresa }}</b> </h6>
+                <span class="fs-6 "> Ativo: <span class="text-success">{{user.plano}}</span></span>
                 <br> 
                 <span class="fs-6 text-secondary">
                      <?php if ($pago == "Nao") {
@@ -85,7 +83,7 @@
                   <br>
 
                 <div class="datas">
-                    <h4 class="text-secondary">API Key: <span class="fw-light"><?=$api?></span></h4>
+                    <h4 class="text-secondary">API Key: <span class="fw-light">{{user.api_key}}</span></h4>
                 </div>
             </div>
         </section><!-- End Breadcrumbs -->

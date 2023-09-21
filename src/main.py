@@ -153,7 +153,7 @@ def login():
         if user and check_password_hash(user.senha_hash, senha):
             login_user(user)
             flash('Login bem-sucedido!', 'success')
-            return redirect(url_for('perfil'))
+            return redirect(url_for('user/dashboard'))
         else:
             flash('Credenciais inválidas. Por favor, tente novamente.', 'danger')
     return render_template('login.html')
@@ -175,16 +175,17 @@ def profile(user_id):
 
 
 
-@app.route('/perfil')
+@app.route('/user/dashboard')
 @login_required
 def perfil():
     return render_template('dashboard.html', user=current_user)
 
-@app.route('/logout')
+@app.route('/user/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def register():
@@ -196,7 +197,7 @@ def register():
         telefone = request.form['telefone']
         senha = request.form['senha']
         senha_hash = generate_password_hash(senha, method='sha256')
-        user = User(nome=nome, empresa=empresa, telefone=telefone, senha=senha, plano=plano, email=email, senha_hash=senha_hash)
+        user = User(nome=nome, api_key=senha_hash, empresa=empresa, telefone=telefone, senha=senha, plano=plano, email=email, senha_hash=senha_hash)
         db.session.add(user)
         db.session.commit()
         flash('Conta criada com sucesso! Faça login para acessar.', 'success')

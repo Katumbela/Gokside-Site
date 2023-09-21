@@ -69,7 +69,7 @@
       </form>
      
     <!-- Exibição das mensagens flash -->
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages()[0] %}
     {% if messages %}
        <center>
         <div style="font-size: 12px;" class="alert w-25 mt-2 alert-danger">
