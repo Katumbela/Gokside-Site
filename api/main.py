@@ -1,10 +1,14 @@
 # -*- coding:utf-8 -*-
 ###
 # --------------------------------------------------------------
+#
 # Modified Date: Thursday, 11th June 2020 9:49:12 pm
 # Modified By: Ritesh Singh
+#
 # --------------------------------------------------------------
 ###
+
+
 from email.header import decode_header
 import sqlite3
 from flask import Flask, flash, render_template, request, redirect, url_for
@@ -23,6 +27,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_de_dados.db'
 app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'  # Substitua com uma chave secreta forte
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
