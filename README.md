@@ -1,4 +1,4 @@
-Read your Gmail inbox using imap.
+
 
 Features:
 ---
