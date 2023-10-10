@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard {{ user }} | Gokside  </title>
+    <title>Dashboard {{ user.empresa }} | Gokside  </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -84,7 +84,7 @@
 
                 <div class="datas">
                     <h4 class="text-secondary">API Key: <span class="fw-light">{{user.api_key}}</span></h4>
-                    <a href="/inbox" class="btn-learn-more"><i class="bi bi-envelope"></i> Ver Caixa de entrada <i class="bi bi-arrow-right"></i></a>
+                    <!-- <a href="/user/inbox" class="btn-learn-more"><i class="bi bi-envelope"></i> Ver Caixa de entrada <i class="bi bi-arrow-right"></i></a> -->
          
                 </div>
             </div>
@@ -97,31 +97,17 @@
                         Suporte: <a href="tel:+244928134249">928 134 249</a> / <a href="mailto:contato@Gokside.site">contato@Gokside.site</a>
                     </p>
                 </div>
-                <div class="col-md-6">
-                    <div class="item text-center">
-                        <h2>Whatsapp</h2>
-                        <div class="w-50 des mx-auto">
-                            <span class="text-secondary  w-50 fw-light fs-6">Contacte o suporte para personalizar a
-                                automação do seu whatsapp.</span>
-                        </div>
-                        <br>
-                        <div class="wpp fs-6 bg-white border-1 border-light cardd">
-                            Serviço indisponível
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div onclick="link('dash_email')" class="item text-center">
-                        <h2>Email</h2>
-                        <div class="w-50 des mx-auto">
-                            <span class="text-secondary w-50 fw-light fs-6">Comece a enviar emails usando templates
-                                 prontos ou apartir do seu website via api.</span>
-                        </div>
-                        <br>
-                        <div class="cardd">
-                            <i class="bi bi-email"></i>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <h1>E-mails de {{user.email}} </h1>
+                    <ul>
+                        {% for email in emails %}
+                            <li>
+                                <strong>Subject:</strong> {{ email.subject }}<br>
+                                <strong>Body:</strong><br>
+                                <pre>{{ email.body }}</pre>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </section>

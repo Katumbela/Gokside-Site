@@ -8,7 +8,8 @@
 # --------------------------------------------------------------
 ###
 
-import datetime
+from datetime import datetime
+
 import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
 
@@ -85,7 +86,7 @@ class EmailRead:
             mail.select(self.label, readonly=True)
             result, data = mail.uid('search', None, self.command)
             if result == 'OK':
-                self.logger.info('Processing mailbox..')
+                self.logger.info('Processing mailbox...')
             else:
                 self.logger.error("Reading error", exc_info=True)
                 sys.exit(0)
@@ -101,40 +102,42 @@ class EmailRead:
                 raw_email = data[0][1]
                 msg = email.message_from_bytes(raw_email)
 
-                subject, encoding = decode_header(msg["Subject"])[0]
-                if isinstance(subject, bytes):
-                    subject = subject.decode(encoding or 'utf-8')
+                # Verifica se o remetente do e-mail é o mesmo que o e-mail do usuário
+                if msg["From"] == current_user.email:
+                    subject, encoding = decode_header(msg["Subject"])[0]
+                    if isinstance(subject, bytes):
+                        subject = subject.decode(encoding or 'utf-8')
 
-                body = ""
-                for part in msg.walk():
-                    if part.get_content_type() == "text/plain":
-                        charset = part.get_content_charset()
-                        body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
+                    body = ""
+                    for part in msg.walk():
+                        if part.get_content_type() == "text/plain":
+                            charset = part.get_content_charset()
+                            body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
 
-                emails.append({"subject": subject, "body": body})
+                    emails.append({"subject": subject, "body": body})
 
             return emails  # Retorna a lista de e-mails
         except Exception as e:
             self.logger.error("Error in reading your %s label: %s" % (self.label, str(e)), exc_info=True)
             return []  # Retorna uma lista vazia em caso de erro
 
-    def __init__(self):
+    def __init__(self, email, password, label, from_date, to_date):
         self.logger = logging.getLogger('sLogger')
         self.subject = []
         self.smtp_server = "imap.gmail.com"
-        self.email_address = config.email
-        self.password = config.password
-        self.label = '"'+config.label+'"'
-        self.from_date = config.from_date
-        self.to_date = config.to_date
+        self.email_address = email
+        self.password = password
+        self.label = label
+        self.from_date = from_date
+        self.to_date = to_date
         self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
 
 
 @app.route('/')
 def index():
-    r1 = EmailRead()
-    data = r1.read_emails()
-    return render_template('index.html', emails=data)
+    # r1 = EmailRead()
+    # data = r1.read_emails()
+    return render_template('index.html', )
 
 @app.route('/pagina/<parametro>')
 def pagina(parametro):
@@ -165,9 +168,9 @@ def inbox():
     data = r1.read_emails()
     return render_template('inbox.html', emails=data)
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User(user_id, '', '', '', '', '', '', '', '', '', '')  # Ajuste conforme necessário
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User(user_id, '', '', '', '', '', '', '', '', '', '')  # Ajuste conforme necessário
 
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -221,7 +224,21 @@ def login():
 @app.route('/user/dashboard')
 @login_required
 def perfil():
-    return render_template('dashboard.html', user=current_user)
+        #  Obtém a data atual
+    data_atual = datetime.now()
+    # Formata a data no formato '10-Apr-2023'
+    data_formatada = data_atual.strftime('%d-%b-%Y')
+
+    r1 = EmailRead(
+        email=current_user.email,
+        password='aqui_coloca_a_senha_do_usuario',
+        label='Inbox',
+        from_date=data_formatada,
+        to_date='1-May-2024'
+    )
+    data = r1.read_emails()
+
+    return render_template('dashboard.html', user=current_user, emails = data)
 
 
 @app.route('/user/dash_email')
