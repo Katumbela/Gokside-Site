@@ -48,8 +48,7 @@ login_manager.login_view = 'login'
 #     return 'Banco de dados criado com sucesso!'
 
 
-class User(db.Model):
-    
+class User(UserMixin, db.Model):
     senha_hash = db.Column(db.String(220), nullable=False)
     senha = db.Column(db.String(220), nullable=False)
     id = db.Column(db.Integer, primary_key=True)
@@ -63,6 +62,9 @@ class User(db.Model):
     data_criacao_conta = db.Column(db.DateTime, default=db.func.current_timestamp())
     api_key = db.Column(db.String(94), unique=True)
 
+
+def get_id(self):
+    return str(self.id)
 
 
 class EmailRead:
@@ -108,6 +110,7 @@ class EmailRead:
             return []  # Retorna uma lista vazia em caso de erro
 
     def __init__(self):
+        
         self.logger = logging.getLogger('sLogger')
         self.subject = []
         self.smtp_server = "imap.gmail.com"
