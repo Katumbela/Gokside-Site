@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -7,9 +5,24 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard {{ user.empresa }} | Gokside  </title>
-    <meta content="" name="description">
+    <title>Dashboard {{ user.empresa }} | Gokside </title>
+    <meta content="Website created by Joao Afonso Katombela, AROTEC" name="description">
     <meta content="" name="keywords">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
 
     <!-- Favicons 
     <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
@@ -40,6 +53,16 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
+<style>
+    .btn {
+        background: #208ed8;
+        color: white;
+    }
+
+    .btn:hover {
+        background: #0e70b2;
+    }
+</style>
 
 <body>
 
@@ -70,22 +93,22 @@
             <div class="container">
 
 
-            <h2>Benvindo  {{user.nome}}. </h2>
+                <h2>Benvindo {{user.nome}}. </h2>
                 <h6 class="fs-6 ">Empresa: <b>{{ user.empresa }}</b> </h6>
                 <span class="fs-6 "> Ativo: <span class="text-success">{{user.plano}}</span></span>
-                <br> 
+                <br>
                 <span class="fs-6 text-secondary">
-                     <?php if ($pago == "Nao") {
+                    <!-- <?php if ($pago == "Nao") {
                    echo "Faça o pagamento do seu plano! &middot; $ ".$preco."";
-                } else { echo "Plano Pago" ;} ?>
-             
+                } else { echo "Plano Pago" ;} ?> -->
+
                 </span>
-                  <br>
+                <br>
 
                 <div class="datas">
                     <h4 class="text-secondary">E-mail: <span class="fw-light">{{user.email}}</span></h4>
                     <!-- <a href="/user/inbox" class="btn-learn-more"><i class="bi bi-envelope"></i> Ver Caixa de entrada <i class="bi bi-arrow-right"></i></a> -->
-         
+
                 </div>
             </div>
         </section><!-- End Breadcrumbs -->
@@ -93,85 +116,97 @@
         <section class="items-serv container">
             <div class="row">
                 <div class="col-12 container">
-                    <p>
-                        Suporte: <a href="tel:+244928134249">928 134 249</a> / <a href="mailto:contato@gokside.site">contato@gokside.site</a>
+                    <p class="d-flex justify-content-between flex-row-wrap flex-wrap">
+                        <span>
+                            Suporte: <a href="tel:+244928134249">928 134 249</a> / <a
+                                href="mailto:contato@gokside.site">contato@gokside.site</a>
+                        </span>
+
+                        <button type="button" class="btn cta-btn" data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@mdo">Enviar Email</button>
+
                     </p>
                     <hr>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emailForm">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Enviar para:</label>
+                                            <input type="text" class="form-control" id="recipient-name" name="recipient">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label">Mensagem:</label>
+                                            <textarea class="form-control" id="message-text" name="message"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn-primary">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
                 <div class="col-12">
                     <h1>Caixa de Entrada</h1>
                     {% if emails %}
                     {% for email in emails %}
-                        <div>
-                            <p><strong>Remetente:</strong> {{ email.sender }}</p>
-                            <p><strong>Destinatário:</strong> {{ email.recipient }}</p>
-                            <p><strong>Assunto:</strong> {{ email.subject }}</p>
-                            <p><strong>Mensagem:</strong> {{ email.body[:200] }}{% if email.body|length > 200 %}...{% endif %}</p>
-                            
-                            <!-- Botões -->
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#emailModal{{ loop.index }}">Abrir</button>
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#replyModal{{ loop.index }}">Responder</button>
-                            
-                            <hr>
-                        </div>
-                
-                        <!-- Modal de Detalhes -->
-                        <div class="modal fade" id="emailModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel{{ loop.index }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="emailModalLabel{{ loop.index }}">Detalhes do E-mail</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Assunto:</strong> {{ email.subject }}</p>
-                                        <p><strong>Mensagem:</strong> {{ email.body }}</p>
-                                        <hr>
-                                    </div>
+                    <div>
+                        <p><strong>Remetente:</strong> {{ email.sender }}</p>
+                        <!-- <p><strong>Destinatário:</strong> {{ email.recipient }}</p> -->
+                        <p><strong>Assunto:</strong> {{ email.subject }}</p>
+                        <p><strong>Mensagem:</strong> {{ email.body[:200] }}{% if email.body|length > 200 %}...{% endif
+                            %}</p>
+
+                        <!-- Botão Ver -->
+                        <button class="btn btn-primary" data-toggle="modal"
+                            data-target="#emailModal{{ loop.index }}">Ler E-mail</button>
+
+                        <hr>
+                    </div>
+
+                    <!-- Modal de Ver Tudo -->
+                    <div style="font-size: 13px; " class="modal bd-example-modal-lg fade"
+                        id="emailModal{{ loop.index }}" tabindex="-1" role="dialog"
+                        aria-labelledby="emailModalLabel{{ loop.index }}" aria-hidden="true">
+                        <div style="font-size: 13px;" class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content" style="font-size: 13px; ">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="emailModalLabel{{ loop.index }}">E-mail Completo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style=" overflow-x: auto; font-size: 13px;">
+                                    <p><strong>Remetente:</strong> {{ email.sender }}</p>
+                                    <p><strong>Destinatário:</strong> {{ email.recipient }}</p>
+                                    <p><strong>Assunto:</strong> {{ email.subject }}</p>
+                                    <p class="w-100"><strong>Mensagem:</strong> {{ email.body }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
                         </div>
-                
-                        <!-- Modal de Resposta -->
-                        <div class="modal fade" id="replyModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel{{ loop.index }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="replyModalLabel{{ loop.index }}">Responder</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="replyMessage{{ loop.index }}">Sua Resposta:</label>
-                                        <textarea class="form-control" id="replyMessage{{ loop.index }}"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                        <button type="button" class="btn btn-primary" onclick="sendReply{{ loop.index }}()">Enviar Resposta</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <script>
-                            function sendReply{{ loop.index }}() {
-                                // Lógica para enviar a resposta
-                                // Recupere o conteúdo de '#replyMessage{{ loop.index }}' e envie como resposta
-                                var replyContent = $('#replyMessage{{ loop.index }}').val();
-                                console.log('Resposta:', replyContent);
-                                // ... Lógica de envio da resposta ...
-                                // Feche o modal
-                                $('#replyModal{{ loop.index }}').modal('hide');
-                            }
-                        </script>
+                    </div>
                     {% endfor %}
-                {% else %}
+                    {% else %}
                     <p>Nenhum e-mail encontrado.</p>
-                {% endif %}
-                
+                    {% endif %}
+
+
                 </div>
             </div>
         </section>
@@ -218,6 +253,40 @@
             }
         }).render('#paypal-button-container-P-23794522DV3935435MS55BBQ'); // Renders the PayPal button
     </script>
+
+
+<script>
+    document.getElementById('sendButton').addEventListener('click', function () {
+        // Captura os valores do formulário
+        var form = document.getElementById('emailForm');
+        var formData = new FormData(form);
+
+        // Crie um objeto JSON com os valores do formulário
+        var jsonData = {};
+        formData.forEach(function (value, key) {
+            jsonData[key] = value;
+        });
+
+        // Envia os dados JSON para o servidor
+        fetch('/seu-endpoint-de-envio', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Lida com a resposta do servidor
+            console.log('Resposta do servidor:', data);
+            // Feche o modal, se necessário
+            $('#exampleModal').modal('hide');
+        })
+        .catch(error => {
+            console.error('Erro ao enviar os dados:', error);
+        });
+    });
+</script>
 </body>
 
 </html>
