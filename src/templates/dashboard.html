@@ -139,14 +139,16 @@
                                 </div>
                                 <div class="modal-body">
                                     <form id="emailForm">
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">Enviar para:</label>
-                                            <input type="text" class="form-control" id="recipient-name" name="recipient">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="message-text" class="col-form-label">Mensagem:</label>
-                                            <textarea class="form-control" id="message-text" name="message"></textarea>
-                                        </div>
+                                        <label for="remetente">Remetente:</label>
+                                        <input type="text" id="remetente" name="remetente" required><br>
+                            
+                                        <label for="destinatario">Destinatário:</label>
+                                        <input type="text" id="destinatario" name="destinatario" required><br>
+                            
+                                        <label for="mensagem">Mensagem:</label>
+                                        <textarea id="mensagem" name="mensagem" required></textarea><br>
+                            
+                                        <button type="button" id="sendButton">Enviar</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -254,20 +256,17 @@
         }).render('#paypal-button-container-P-23794522DV3935435MS55BBQ'); // Renders the PayPal button
     </script>
 
-
+    
 <script>
     document.getElementById('sendButton').addEventListener('click', function () {
-        // Captura os valores do formulário
         var form = document.getElementById('emailForm');
         var formData = new FormData(form);
 
-        // Crie um objeto JSON com os valores do formulário
         var jsonData = {};
         formData.forEach(function (value, key) {
             jsonData[key] = value;
         });
 
-        // Envia os dados JSON para o servidor
         fetch('/seu-endpoint-de-envio', {
             method: 'POST',
             headers: {
@@ -277,10 +276,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            // Lida com a resposta do servidor
-            console.log('Resposta do servidor:', data);
-            // Feche o modal, se necessário
-            $('#exampleModal').modal('hide');
+            alert(data.resposta);
         })
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);

@@ -10,6 +10,9 @@
 import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
 
+from flask import Flask, render_template, request, jsonify
+from flask_mail import Mail, Message
+
 
 from collections import OrderedDict
 from datetime import datetime
@@ -29,6 +32,15 @@ import config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
+
+
+# Configuração para o Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -315,6 +327,31 @@ def register():
         flash('Conta criada com sucesso! Faça login para acessar.', 'success')
         return redirect(url_for('login'))
     return render_template('cadastro.html')
+
+
+
+
+@app.route('/seu-endpoint-de-envio', methods=['POST'])
+def enviar_email():
+    data = request.get_json()
+
+    # Lógica para enviar o e-mail com os dados recebidos
+    remetente = data.get('remetente')
+    destinatario = data.get('destinatario')
+    mensagem = data.get('mensagem')
+
+    # Envia o e-mail usando o Flask-Mail
+    try:
+        msg = Message('Assunto do E-mail', sender=remetente, recipients=[destinatario])
+        msg.body = mensagem
+        mail.send(msg)
+        resposta_do_servidor = 'E-mail enviado com sucesso!'
+    except Exception as e:
+        resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
+
+    return jsonify({'resposta': resposta_do_servidor})
+
+
 
 # Função para lidar com erros 404
 @app.errorhandler(404)
