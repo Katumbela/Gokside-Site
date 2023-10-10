@@ -8,6 +8,7 @@
 # --------------------------------------------------------------
 ###
 
+import datetime
 import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
 
@@ -147,11 +148,22 @@ def pagina(parametro):
 
 
 @app.route('/user/inbox')
+@login_required
 def inbox():
-    r1 = EmailRead()
+        # Obtém a data atual
+    data_atual = datetime.now()
+    # Formata a data no formato '10-Apr-2023'
+    data_formatada = data_atual.strftime('%d-%b-%Y')
+
+    r1 = EmailRead(
+        email=current_user.email,
+        password='aqui_coloca_a_senha_do_usuario',
+        label='Inbox',
+        from_date=data_formatada,
+        to_date='1-May-2024'
+    )
     data = r1.read_emails()
     return render_template('inbox.html', emails=data)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -197,7 +209,9 @@ def login():
             if check_password_hash(user.senha_hash, senha):
                 login_user(user)
                 flash('Login bem-sucedido!', 'success')
+                print(current_user)
                 return redirect(url_for('perfil'))
+            
             else:
                 flash('Senha incorreta. Por favor, tente novamente.', 'danger')
         else:

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard {{ user.empresa }} | Gokside  </title>
+    <title>Dashboard {{ user }} | Gokside  </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -54,7 +54,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto">{{user.nome}}</a></li>
-                    <li><a class="nav-link scrollto">{{user.pacote }}</a></li>
+                    <li><a class="nav-link scrollto">{{user.plano }}</a></li>
                     <li><a class="getstarted scrollto" href="./logout">Sair</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -84,6 +84,8 @@
 
                 <div class="datas">
                     <h4 class="text-secondary">API Key: <span class="fw-light">{{user.api_key}}</span></h4>
+                    <a href="/inbox" class="btn-learn-more"><i class="bi bi-envelope"></i> Ver Caixa de entrada <i class="bi bi-arrow-right"></i></a>
+         
                 </div>
             </div>
         </section><!-- End Breadcrumbs -->
