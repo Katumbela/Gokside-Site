@@ -141,7 +141,7 @@ def pagina(parametro):
     return render_template('cadastro.html', parametro=pacote)
 
 
-@app.route('/inbox')
+@app.route('/user/inbox')
 def inbox():
     r1 = EmailRead()
     data = r1.read_emails()
@@ -220,6 +220,17 @@ def register():
         return redirect(url_for('login'))
     return render_template('cadastro.html')
 
+
+
+# Função para lidar com erros 404
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('/404/index.html'), 404
+
+# Rota padrão para erro 404
+@app.route('/404')
+def not_found():
+    return render_template('/404/index.html'), 404
 
 
 if __name__ == '__main__':
