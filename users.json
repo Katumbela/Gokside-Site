@@ -1,16 +1,1 @@
-{
-    "1": 
-{"nome": "Jo\u00e3o Afonso Katombela", 
-"email": "joao.katumbela@arotec.ao", 
-"senha_hash": "jgluewhazvnkddjp", 
-"empresa": "AROTEC SU", 
-"telefone": "+244928134249", 
-"estado_conta": "ativo", 
-"plano": "PACOTE BUISINESS", 
-"estado_pagamento": "pendente", 
-"data_criacao_conta": "10/10/2023", 
-"api_key": "sha256$FiAVwHq5KgTS77zL$1063a3ff80b6811e2d731a422"
-}
-
-
-}
+{"1": {"nome": "Jo\u00e3o Afonso Katombela", "email": "joao.katumbela@arotec.ao", "senha_hash": "jgluewhazvnkddjp", "empresa": "AROTEC SU", "telefone": "+244928134249", "estado_conta": "ativo", "plano": "PACOTE BUISINESS", "estado_pagamento": "pendente", "data_criacao_conta": "10/10/2023", "api_key": "sha256$FiAVwHq5KgTS77zL$1063a3ff80b6811e2d731a422"}, "2": {"nome": "Jo\u00e3o Afonso Katombela", "email": "joao.katumbela@arotec.ao", "senha_hash": "sha256$GJyFyDmofPLcyXjm$8ced8c5548fb7e98f2735ef3eb91d75700cc45417e60cf6ef9b21988060b0ff5", "empresa": "AROTEC SU", "telefone": "+244928134249", "estado_conta": "ativo", "plano": "PACOTE BUISINESS", "estado_pagamento": "pendente", "data_criacao_conta": "alguma_data", "api_key": "alguma_api_key"}}
