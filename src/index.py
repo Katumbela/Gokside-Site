@@ -8,6 +8,9 @@
 # --------------------------------------------------------------
 ###
 
+import logging
+logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
+
 from email.header import decode_header
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -188,14 +191,18 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
         user = find_user_by_email(email)
-        if user and check_password_hash(user.senha_hash, senha):
-            login_user(user)
-            flash('Login bem-sucedido!', 'success')
-            return redirect(url_for('perfil'))
+        if user:
+            logging.debug(f'Usuário encontrado: {user.email}')
+            logging.debug(f'Senha do usuário: {user.senha_hash}')
+            if check_password_hash(user.senha_hash, senha):
+                login_user(user)
+                flash('Login bem-sucedido!', 'success')
+                return redirect(url_for('perfil'))
+            else:
+                flash('Senha incorreta. Por favor, tente novamente.', 'danger')
         else:
-            flash('Credenciais inválidas. Por favor, tente novamente.', 'danger')
+            flash('Usuário não encontrado. Por favor, tente novamente.', 'danger')
     return render_template('login.html')
-
 
 @app.route('/user/dashboard')
 @login_required
