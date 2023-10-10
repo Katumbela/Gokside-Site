@@ -1,3 +1,4 @@
+from email.utils import formataddr
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -9,7 +10,7 @@ def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
 
     # Criação da mensagem
     msg = MIMEMultipart()
-    msg['From'] = remetente  # Usando o endereço desejado como remetente
+    msg['From'] = remetente  # Configura o remetente desejado
     msg['To'] = destinatario
     msg['Subject'] = assunto
 
@@ -25,9 +26,9 @@ def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
 # Exemplo de uso
 usuario_smtp = 'contact.diversishop@gmail.com'
 senha_smtp = 'elactgylqqfekeok'
-remetente = 'geral@arotec.ao'
+remetente_desejado = formataddr(('AROTEC SU', 'geral@arotec.ao'))
 destinatario = 'ja3328173@gmail.com'
 assunto = 'Assunto do E-mail'
 mensagem = 'Corpo do E-mail'
 
-enviar_email(usuario_smtp, senha_smtp, remetente, destinatario, assunto, mensagem)
+enviar_email(usuario_smtp, senha_smtp, remetente_desejado, destinatario, assunto, mensagem)

@@ -11,7 +11,10 @@ import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
 
 from flask import Flask, render_template, request, jsonify
-from flask_mail import Mail, Message
+from email.utils import formataddr
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 from collections import OrderedDict
@@ -33,14 +36,6 @@ import config
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
 
-
-# Configuração para o Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-
-mail = Mail(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -93,8 +88,7 @@ def load_user(user_id):
     return None
 
 class EmailRead:
-    
-    
+     
     def read_emails(self):
         try:
             mail = imaplib.IMAP4_SSL(self.smtp_server)
@@ -165,6 +159,30 @@ class EmailRead:
         self.to_date = to_date
         self.email_corp = email_corp
         self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
+
+
+
+def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
+    # Configuração do servidor SMTP do Gmail
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+
+    # Criação da mensagem
+    msg = MIMEMultipart()
+    msg['From'] = remetente  # Configura o remetente desejado
+    msg['To'] = destinatario
+    msg['Subject'] = assunto
+
+    # Adiciona o corpo da mensagem
+    msg.attach(MIMEText(mensagem, 'plain'))
+
+    # Conexão e envio usando SMTP
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(usuario, senha)
+        server.sendmail(remetente, destinatario, msg.as_string())
+
+
 
 
 @app.route('/')
@@ -342,10 +360,7 @@ def enviar_email():
 
     # Envia o e-mail usando o Flask-Mail
     try:
-        msg = Message('Assunto do E-mail', sender=remetente, recipients=[destinatario])
-        msg.body = mensagem
-        mail.send(msg)
-        resposta_do_servidor = 'E-mail enviado com sucesso!'
+       print("aaa")
     except Exception as e:
         resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
 
