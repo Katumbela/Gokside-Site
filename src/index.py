@@ -108,7 +108,6 @@ class EmailRead:
             return []  # Retorna uma lista vazia em caso de erro
 
     def __init__(self):
-        logging.config.fileConfig('log.ini')
         self.logger = logging.getLogger('sLogger')
         self.subject = []
         self.smtp_server = "imap.gmail.com"
