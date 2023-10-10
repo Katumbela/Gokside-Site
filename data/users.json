@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "senha_hash": "hash_da_senha_1",
+      "senha": "senha1",
+      "nome": "Usuário 1",
+      "email": "usuario1@example.com",
+      "empresa": "Empresa A",
+      "telefone": "123456789",
+      "estado_conta": "ativo",
+      "plano": "Plano X",
+      "estado_pagamento": "pendente",
+      "data_criacao_conta": "2023-10-10T12:00:00",
+      "api_key": "api_key_1"
+    },
+    {
+      "id": 2,
+      "senha_hash": "hash_da_senha_2",
+      "senha": "1234",
+      "nome": "Usuário 2",
+      "email": "katumbela@arotec.ao",
+      "empresa": "Empresa B",
+      "telefone": "987654321",
+      "estado_conta": "ativo",
+      "plano": "Plano Y",
+      "estado_pagamento": "pendente",
+      "data_criacao_conta": "2023-10-11T14:30:00",
+      "api_key": "api_key_2"
+    }
+  ]
+  

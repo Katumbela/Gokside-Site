@@ -8,64 +8,69 @@
 # --------------------------------------------------------------
 ###
 
-
 from email.header import decode_header
-import sqlite3
 from flask import Flask, flash, render_template, request, redirect, url_for
-import logging, logging.config
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+
+import json
+import logging
 import sys
 import imaplib
 import re
 import email
-import time
 import config
-from flask_sqlalchemy import SQLAlchemy
-# from flask_login import LoginManager, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_de_dados.db'
-app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'  # Substitua com uma chave secreta forte
+app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
 
-
-db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# login_manager = LoginManager()
-# login_manager.init_app(app)  # Onde 'app' é a instância do Flask
+# Caminho para o arquivo JSON
+USERS_JSON_FILE = 'users.json'
 
-# Função para criar o banco de dados SQLite
-# def criar_banco_de_dados():
-#     connection = sqlite3.connect('seu_banco_de_dados.db')
-#     connection.close()
+def load_users():
+    try:
+        with open(USERS_JSON_FILE, 'r') as file:
+            users = json.load(file)
+    except FileNotFoundError:
+        users = {}
+    return users
 
-# # Rota para criar o banco de dados (chame-a uma vez para criar o arquivo do banco de dados)
-# @app.route('/banco', methods=['GET'])
-# def criar_banco_de_dados_rota():
-#     criar_banco_de_dados()
-#     return 'Banco de dados criado com sucesso!'
+def save_users(users):
+    with open(USERS_JSON_FILE, 'w') as file:
+        json.dump(users, file)
 
+class User(UserMixin):
+    def __init__(self, id, nome, email, senha_hash, empresa, telefone, estado_conta, plano, estado_pagamento, data_criacao_conta, api_key):
+        self.id = id
+        self.nome = nome
+        self.email = email
+        self.senha_hash = senha_hash
+        self.empresa = empresa
+        self.telefone = telefone
+        self.estado_conta = estado_conta
+        self.plano = plano
+        self.estado_pagamento = estado_pagamento
+        self.data_criacao_conta = data_criacao_conta
+        self.api_key = api_key
 
-class User(UserMixin, db.Model):
-    senha_hash = db.Column(db.String(220), nullable=False)
-    senha = db.Column(db.String(220), nullable=False)
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(800), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    empresa = db.Column(db.String(120))
-    telefone = db.Column(db.String(20))
-    estado_conta = db.Column(db.String(20), default='ativo')  # Pode ser 'ativo' ou 'inativo'
-    plano = db.Column(db.String(200))
-    estado_pagamento = db.Column(db.String(20), default='pendente')  # Pode ser 'pendente', 'pago', etc.
-    data_criacao_conta = db.Column(db.DateTime, default=db.func.current_timestamp())
-    api_key = db.Column(db.String(94), unique=True)
+# Função para encontrar um usuário por e-mail
+def find_user_by_email(email):
+    users = load_users()
+    for user_id, user_data in users.items():
+        if user_data['email'] == email:
+            return User(user_id, **user_data)
+    return None
 
-
-def get_id(self):
-    return str(self.id)
-
+@login_manager.user_loader
+def load_user(user_id):
+    users = load_users()
+    user_data = users.get(str(user_id))
+    if user_data:
+        return User(user_id, **user_data)
+    return None
 
 class EmailRead:
            
@@ -76,7 +81,7 @@ class EmailRead:
             mail.select(self.label, readonly=True)
             result, data = mail.uid('search', None, self.command)
             if result == 'OK':
-                self.logger.info('Processing mailbox...')
+                self.logger.info('Processing mailbox..')
             else:
                 self.logger.error("Reading error", exc_info=True)
                 sys.exit(0)
@@ -110,7 +115,6 @@ class EmailRead:
             return []  # Retorna uma lista vazia em caso de erro
 
     def __init__(self):
-        
         self.logger = logging.getLogger('sLogger')
         self.subject = []
         self.smtp_server = "imap.gmail.com"
@@ -120,8 +124,6 @@ class EmailRead:
         self.from_date = config.from_date
         self.to_date = config.to_date
         self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
-        
-
 
 
 @app.route('/')
@@ -150,14 +152,12 @@ def inbox():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
+    return User(user_id, '', '', '', '', '', '', '', '', '', '')  # Ajuste conforme necessário
 
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def profile(user_id):
-    user = User.query.get(user_id)
+    user = load_user(user_id)
     if request.method == 'POST':
         # Atualize as informações do usuário aqui
         user.nome = request.form['nome']
@@ -165,7 +165,20 @@ def profile(user_id):
         user.empresa = request.form['empresa']
         user.telefone = request.form['telefone']
         # Atualize outros campos conforme necessário
-        db.session.commit()
+        users = load_users()
+        users[str(user.id)] = {
+            'nome': user.nome,
+            'email': user.email,
+            'senha_hash': user.senha_hash,
+            'empresa': user.empresa,
+            'telefone': user.telefone,
+            'estado_conta': user.estado_conta,
+            'plano': user.plano,
+            'estado_pagamento': user.estado_pagamento,
+            'data_criacao_conta': user.data_criacao_conta,
+            'api_key': user.api_key
+        }
+        save_users(users)
     return render_template('profile.html', user=user)
 
 
@@ -174,24 +187,24 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
-        user = User.query.filter_by(email=email).first()
+        user = find_user_by_email(email)
         if user and check_password_hash(user.senha_hash, senha):
             login_user(user)
             flash('Login bem-sucedido!', 'success')
             return redirect(url_for('perfil'))
         else:
-            flash('Credenciais   inválidas.   Por favor,   tente novamente.', 'danger')
+            flash('Credenciais inválidas. Por favor, tente novamente.', 'danger')
     return render_template('login.html')
 
 
 @app.route('/user/dashboard')
-# @login_required
+@login_required
 def perfil():
     return render_template('dashboard.html', user=current_user)
 
 
 @app.route('/user/dash_email')
-# @login_required
+@login_required
 def dash_email():
     return render_template('dash_email.html', user=current_user)
 
@@ -213,14 +226,25 @@ def register():
         telefone = request.form['telefone']
         senha = request.form['senha']
         senha_hash = generate_password_hash(senha, method='sha256')
-        user = User(nome=nome, api_key=senha_hash, empresa=empresa, telefone=telefone, senha=senha, plano=plano, email=email, senha_hash=senha_hash)
-        db.session.add(user)
-        db.session.commit()
+        user_id = len(load_users()) + 1  # Gere um ID único
+        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', 'alguma_data', 'alguma_api_key')
+        users = load_users()
+        users[str(user_id)] = {
+            'nome': user.nome,
+            'email': user.email,
+            'senha_hash': user.senha_hash,
+            'empresa': user.empresa,
+            'telefone': user.telefone,
+            'estado_conta': user.estado_conta,
+            'plano': user.plano,
+            'estado_pagamento': user.estado_pagamento,
+            'data_criacao_conta': user.data_criacao_conta,
+            'api_key': user.api_key
+        }
+        save_users(users)
         flash('Conta criada com sucesso! Faça login para acessar.', 'success')
         return redirect(url_for('login'))
     return render_template('cadastro.html')
-
-
 
 # Função para lidar com erros 404
 @app.errorhandler(404)
@@ -234,6 +258,4 @@ def not_found():
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
