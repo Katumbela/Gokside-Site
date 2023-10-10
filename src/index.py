@@ -7,11 +7,12 @@
 #
 # --------------------------------------------------------------
 ###
-
-from datetime import datetime
-
 import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
+
+
+from collections import OrderedDict
+from datetime import datetime
 
 from email.header import decode_header
 from flask import Flask, flash, render_template, request, redirect, url_for
@@ -35,20 +36,20 @@ login_manager.login_view = 'login'
 # Caminho para o arquivo JSON
 USERS_JSON_FILE = 'users.json'
 
-def load_users():
-    try:
-        with open(USERS_JSON_FILE, 'r') as file:
-            users = json.load(file)
-    except FileNotFoundError:
-        users = {}
-    return users
-
 def save_users(users):
     with open(USERS_JSON_FILE, 'w') as file:
         json.dump(users, file)
 
+def load_users():
+    try:
+        with open(USERS_JSON_FILE, 'r') as file:
+            users = json.load(file, object_pairs_hook=OrderedDict)
+    except FileNotFoundError:
+        users = {}
+    return users
+
 class User(UserMixin):
-    def __init__(self, id, nome, email, senha_hash, empresa, telefone, estado_conta, plano, estado_pagamento, data_criacao_conta, api_key):
+    def __init__(self, id, nome, email, senha_hash, empresa, telefone, estado_conta, plano, estado_pagamento, data_criacao_conta, api_key, senha_app, email_pr):
         self.id = id
         self.nome = nome
         self.email = email
@@ -60,6 +61,8 @@ class User(UserMixin):
         self.estado_pagamento = estado_pagamento
         self.data_criacao_conta = data_criacao_conta
         self.api_key = api_key
+        self.senha_app = senha_app
+        self.email_pr = email_pr
 
 # Função para encontrar um usuário por e-mail
 def find_user_by_email(email):
@@ -78,50 +81,68 @@ def load_user(user_id):
     return None
 
 class EmailRead:
-           
+    
+    
     def read_emails(self):
         try:
             mail = imaplib.IMAP4_SSL(self.smtp_server)
+            self.logger.debug(f"Trying to login with email: {self.email_address}")
             mail.login(self.email_address, self.password)
+            self.logger.debug(f"Login successful for email: {self.email_address}")
+
             mail.select(self.label, readonly=True)
+
             result, data = mail.uid('search', None, self.command)
             if result == 'OK':
                 self.logger.info('Processing mailbox...')
             else:
                 self.logger.error("Reading error", exc_info=True)
                 sys.exit(0)
-            
+
             ids = data[0].split()
             if len(ids) == 0:
                 self.logger.info("No email found in selected dates.")
 
-            emails = []  # Lista para armazenar os e-mails
+            emails = []
 
+            self.logger.debug("Processing email IDs...")
             for x in ids:
+                self.logger.debug(f"Processing email ID: {x}")
                 result, data = mail.uid('fetch', x, "(RFC822)")
                 raw_email = data[0][1]
                 msg = email.message_from_bytes(raw_email)
 
-                # Verifica se o remetente do e-mail é o mesmo que o e-mail do usuário
-                if msg["From"] == current_user.email:
-                    subject, encoding = decode_header(msg["Subject"])[0]
-                    if isinstance(subject, bytes):
-                        subject = subject.decode(encoding or 'utf-8')
+                self.logger.debug(f"From: {msg['From']}")
+                self.logger.debug(f"To: {msg['To']}")
+                self.logger.debug(f"Subject: {msg['Subject']}")
+                self.logger.debug(f"Content-Type: {msg.get_content_type()}")
 
-                    body = ""
-                    for part in msg.walk():
-                        if part.get_content_type() == "text/plain":
-                            charset = part.get_content_charset()
-                            body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding or 'utf-8')
 
-                    emails.append({"subject": subject, "body": body})
+                body = ""
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        charset = part.get_content_charset()
+                        body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
 
-            return emails  # Retorna a lista de e-mails
+                self.logger.debug(f"Found email: Subject: {subject}, Body: {body}")
+
+                sender = msg.get("From", "")
+                recipient = msg.get("To", "")
+
+                # Adicione a verificação para incluir apenas e-mails do usuário logado
+                if sender == self.email_corp or recipient == self.email_corp:
+                    emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body})
+
+            return emails
+
         except Exception as e:
             self.logger.error("Error in reading your %s label: %s" % (self.label, str(e)), exc_info=True)
-            return []  # Retorna uma lista vazia em caso de erro
+            return []
 
-    def __init__(self, email, password, label, from_date, to_date):
+    def __init__(self, email, password, label, from_date, to_date, email_corp):
         self.logger = logging.getLogger('sLogger')
         self.subject = []
         self.smtp_server = "imap.gmail.com"
@@ -130,6 +151,7 @@ class EmailRead:
         self.label = label
         self.from_date = from_date
         self.to_date = to_date
+        self.email_corp = email_corp
         self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
 
 
@@ -159,11 +181,12 @@ def inbox():
     data_formatada = data_atual.strftime('%d-%b-%Y')
 
     r1 = EmailRead(
-        email=current_user.email,
-        password='aqui_coloca_a_senha_do_usuario',
+        email= current_user.email_pr,
+        password= current_user.senha_app,
         label='Inbox',
         from_date=data_formatada,
-        to_date='1-May-2024'
+        to_date='1-May-2024',
+        email_corp=current_user.email
     )
     data = r1.read_emails()
     return render_template('inbox.html', emails=data)
@@ -194,7 +217,9 @@ def profile(user_id):
             'plano': user.plano,
             'estado_pagamento': user.estado_pagamento,
             'data_criacao_conta': user.data_criacao_conta,
-            'api_key': user.api_key
+            'api_key': user.api_key,
+            'senhap_app': user.senha_app,
+            'email_pr': user.email_pr
         }
         save_users(users)
     return render_template('profile.html', user=user)
@@ -230,12 +255,14 @@ def perfil():
     data_formatada = data_atual.strftime('%d-%b-%Y')
 
     r1 = EmailRead(
-        email=current_user.email,
-        password='aqui_coloca_a_senha_do_usuario',
+        email=current_user.email_pr,
+        password=current_user.senha_app,
         label='Inbox',
         from_date=data_formatada,
-        to_date='1-May-2024'
+        to_date='1-May-2024',
+        email_corp=current_user.email
     )
+
     data = r1.read_emails()
 
     return render_template('dashboard.html', user=current_user, emails = data)
@@ -265,9 +292,10 @@ def register():
         senha = request.form['senha']
         senha_hash = generate_password_hash(senha, method='sha256')
         user_id = len(load_users()) + 1  # Gere um ID único
-        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', 'alguma_data', 'alguma_api_key')
+        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elac tgyl qqfe keok", "contact.diversishop@gmail.com")
         users = load_users()
-        users[str(user_id)] = {
+        
+        users[str(user_id)] = OrderedDict({
             'nome': user.nome,
             'email': user.email,
             'senha_hash': user.senha_hash,
@@ -277,9 +305,13 @@ def register():
             'plano': user.plano,
             'estado_pagamento': user.estado_pagamento,
             'data_criacao_conta': user.data_criacao_conta,
-            'api_key': user.api_key
-        }
+            'api_key': user.api_key,
+            'senha_app': 'elac tgyl qqfe keok',
+            'email_pr': user.email_pr
+        })
+
         save_users(users)
+
         flash('Conta criada com sucesso! Faça login para acessar.', 'success')
         return redirect(url_for('login'))
     return render_template('cadastro.html')
