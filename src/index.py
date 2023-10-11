@@ -150,11 +150,10 @@ class EmailRead:
                 recipient = msg.get("To", "")
 
                 # Adicione a verificação para incluir apenas e-mails do usuário logado
-                if sender == self.email_corp or recipient == self.email_corp:
+                if  msg['To'] == self.email_corp:
                     emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body})
 
-            return sorted(emails, key=lambda x: x['data'], reverse=True)
-
+            return emails
 
         except Exception as e:
             self.logger.error("Error in reading your %s label: %s" % (self.label, str(e)), exc_info=True)
