@@ -125,8 +125,8 @@
                                 href="mailto:suporte@arotec.ao">suporte@arotec.ao</a>
                         </span>
 
-                        <button id="enviarE" type="button" class="btn cta-btn" 
-                            >Enviar Email</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Enviar Email</button>
 
                     </p>
                     <hr>
@@ -180,7 +180,7 @@
                         <p>Nenhum e-mail encontrado.</p>
                     {% endif %} -->
 
-                    <h1>Caixa de Entrada</h1>
+                    <h1>Caixa de  {{emails}}</h1>
                     {% if emails %}
                     {% for email in emails %}
                     <div>
@@ -302,107 +302,57 @@
 //         });
 //     });
 
-//     Swal.fire({
-//   title: 'Enviar E-mail',
-//   html:
-//     '<form id="emailForm">' +
-//     '<label for="assunto">Assunto:</label>' +
-//     '<input class="swal2-input" id="assunto" name="assunto" required>' +
-//     '<label for="destinatario">Destinatário:</label>' +
-//     '<input class="swal2-input" id="destinatario" name="destinatario" required>' +
-//     '<label for="mensagem">Mensagem:</label>' +
-//     '<textarea class="swal2-input" id="mensagem" name="mensagem" required></textarea>' +
-//     '</form>',
-//   confirmButtonText: 'Enviar',
-//   showCancelButton: true,
-//   preConfirm: () => {
-//     var form = document.getElementById('emailForm');
-//     var formData = new FormData(form);
 
-//     var jsonData = {};
-//     formData.forEach(function (value, key) {
-//       jsonData[key] = value;
-//     });
-
-//     return fetch('/send_email', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(jsonData)
-//     })
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error(response.statusText);
-//         }
-//         return response.json();
-//       })
-//       .catch(error => {
-//         Swal.showValidationMessage(`Erro ao enviar os dados: ${error}`);
-//       });
-//   },
-//   allowOutsideClick: () => !Swal.isLoading()
-// }).then((result) => {
-//   if (result.isConfirmed) {
-//     Swal.fire({
-//       title: 'Resposta do Servidor',
-//       text: result.value.resposta
-//     });
-//   }
-// });
-
-$("#enviarE").click(function () {
-    Swal.fire({
-  title: 'Enviar E-mail',
-  html:
-    '<form id="emailForm" class="text-start">' +
-    '<label for="assunto">Assunto:</label>' +
-    '<input class=" form-control" id="assunto" name="assunto" required>' +
-    '<label for="destinatario">Destinatário:</label>' +
-    '<input class=" form-control" id="destinatario" name="destinatario" required>' +
-    '<label for="mensagem">Mensagem:</label>' +
-    '<textarea class=" form-control" id="mensagem" name="mensagem" required></textarea>' +
-    '</form>',
-  confirmButtonText: 'Enviar',
-  showCancelButton: true,
-  preConfirm: () => {
-    var form = document.getElementById('emailForm');
-    var formData = new FormData(form);
-
-    var jsonData = {};
-    formData.forEach(function (value, key) {
-      jsonData[key] = value;
-    });
-
-    return fetch('/send_email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        return response.json();
-      })
-      .catch(error => {
-        Swal.showValidationMessage(`Erro ao enviar os dados: ${error}`);
-      });
-  },
-  allowOutsideClick: () => !Swal.isLoading()
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: 'Resposta do Servidor',
-      text: result.value.resposta
-    });
-  }
-});
-
-})
 </script>
+
+<script>
+    document.getElementById('sendButton').addEventListener('click', function () {
+        // Obter os valores dos campos do formulário
+        var assunto = document.getElementById('assunto').value;
+        var destinatario = document.getElementById('destinatario').value;
+        var mensagem = document.getElementById('mensagem').value;
+
+        // Criar um objeto com os dados do formulário
+        var jsonData = {
+            'assunto': assunto,
+            'destinatario': destinatario,
+            'mensagem': mensagem
+        };
+
+        // Enviar a solicitação para o servidor Flask
+        fetch('/send_email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Manipular a resposta do servidor
+            console.log(data.resposta);
+            Swal.fire(
+                'Uhaaa!',
+                data.resposta,
+                'success'
+                )
+        })
+        .catch(error => {
+            Swal.fire(
+                'Ups!',
+                data.resposta,
+                'error'
+                );
+            console.error('Erro ao enviar os dados:', error);
+        });
+    });
+</script>
+
 </body>
 
 </html>
