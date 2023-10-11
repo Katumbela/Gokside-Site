@@ -337,6 +337,13 @@ Recebeu este email para o(a) informar acerca de alterações importantes
 efetuadas aos serviços e à sua Conta Google.
 © 2023 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA
 
+DEBUG:sLogger:Processing email ID: b'56'
+DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
+DEBUG:sLogger:To: geral@arotec.ao
+DEBUG:sLogger:Subject: teste
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: teste, Body: testawdwemscfe wd
+
 DEBUG:sLogger:Processing email ID: b'57'
 DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
 DEBUG:sLogger:To: Jonilson Correia <jonilson.correia@arotec.ao>
@@ -344,12 +351,30 @@ DEBUG:sLogger:Subject: jgygu
 DEBUG:sLogger:Content-Type: multipart/alternative
 DEBUG:sLogger:Found email: Subject: jgygu, Body: ghccghg
 
+DEBUG:sLogger:Processing email ID: b'58'
+DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
+DEBUG:sLogger:To: AROTEC SU <geral@arotec.ao>
+DEBUG:sLogger:Subject: Re: Assunto do E-mail
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: Re: Assunto do E-mail, Body: EMail de teste para arotec
+
+AROTEC SU <geral@arotec.ao> escreveu no dia terça, 10/10/2023 à(s) 20:03:
+
+> Corpo do E-mail
+
 DEBUG:sLogger:Processing email ID: b'59'
 DEBUG:sLogger:From: Mail Delivery Subsystem <mailer-daemon@googlemail.com>
 DEBUG:sLogger:To: contact.diversishop@gmail.com
 DEBUG:sLogger:Subject: Delivery Status Notification (Failure)
 DEBUG:sLogger:Content-Type: multipart/report
 DEBUG:sLogger:Found email: Subject: Delivery Status Notification (Failure), Body: 
+DEBUG:sLogger:Processing email ID: b'60'
+DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
+DEBUG:sLogger:To: AROTEC SU <geral@arotec.ao>
+DEBUG:sLogger:Subject: teste de email 2
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: teste de email 2, Body: Teste de email da arotec
+
 DEBUG:sLogger:Processing email ID: b'61'
 DEBUG:sLogger:From: Google <no-reply@accounts.google.com>
 DEBUG:sLogger:To: contact.diversishop@gmail.com
@@ -473,6 +498,12 @@ or installed our application.
  
 
 Unsubcribe here ( http://track.customer.io/unsubscribe/dgTBjgcDAIfeQYbeQQGLHEHjhQYikfd13ZbtUuo= )
+DEBUG:sLogger:Processing email ID: b'63'
+DEBUG:sLogger:From: Joao Katumbela <joaokatumbela82@gmail.com>
+DEBUG:sLogger:To: geral@arotec.ao
+DEBUG:sLogger:Subject: teste 2
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: teste 2, Body: teste de envio de email numero dois segudno dia
 
 DEBUG:sLogger:Processing email ID: b'67'
 DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
@@ -516,6 +547,13 @@ DEBUG:sLogger:Subject: Teste de email MailBox Arotece
 DEBUG:sLogger:Content-Type: multipart/alternative
 DEBUG:sLogger:Found email: Subject: Teste de email MailBox Arotece, Body: teste para jonilson.correia@arotec.ao
 
+DEBUG:sLogger:Processing email ID: b'75'
+DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
+DEBUG:sLogger:To: AROTEC SU <geral@arotec.ao>
+DEBUG:sLogger:Subject: teste
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: teste, Body: teste de iejd wefreuheh vregelac tgyl qqfe keoktr trggrf
+
 DEBUG:sLogger:Processing email ID: b'76'
 DEBUG:sLogger:From: Google <no-reply@accounts.google.com>
 DEBUG:sLogger:To: contact.diversishop@gmail.com
@@ -536,6 +574,12 @@ Recebeu este email para o(a) informar acerca de alterações importantes
 efetuadas aos serviços e à sua Conta Google.
 © 2023 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA
 
+DEBUG:sLogger:Processing email ID: b'77'
+DEBUG:sLogger:From: Joao Afonso Katombela <ja3328173@gmail.com>
+DEBUG:sLogger:To: AROTEC SU <geral@arotec.ao>
+DEBUG:sLogger:Subject: bla ba
+DEBUG:sLogger:Content-Type: multipart/alternative
+DEBUG:sLogger:Found email: Subject: bla ba, Body: bla. bal
 
 INFO:werkzeug:127.0.0.1 - - [11/Oct/2023 15:13:23] "GET /user/dashboard HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [11/Oct/2023 15:13:23] "GET /static/assets/vendor/aos/aos.css HTTP/1.1" 304 -

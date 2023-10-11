@@ -109,7 +109,7 @@ class EmailRead:
 
             mail.select(self.label, readonly=True)
 
-            result, data = mail.uid('search', None, self.command)
+            result, data = mail.uid('search', None, 'ALL')
             if result == 'OK':
                 self.logger.info('Processing mailbox...')
             else:
@@ -134,6 +134,9 @@ class EmailRead:
                 self.logger.debug(f"Subject: {msg['Subject']}")
                 self.logger.debug(f"Content-Type: {msg.get_content_type()}")
 
+                date_received = msg.get('Date')
+                self.logger.debug(f"Date Received: {date_received}")
+
                 subject, encoding = decode_header(msg["Subject"])[0]
                 if isinstance(subject, bytes):
                     subject = subject.decode(encoding or 'utf-8')
@@ -150,10 +153,12 @@ class EmailRead:
                 recipient = msg.get("To", "")
 
                 # Adicione a verificação para incluir apenas e-mails do usuário logado
-                if  msg['To'] == self.email_corp:
-                    emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body})
+                if self.email_corp in msg['To']:
+                    emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body, "date": date_received})
 
-            return emails
+                return sorted(emails, key=lambda x: x['Date'], reverse=True)
+
+
 
         except Exception as e:
             self.logger.error("Error in reading your %s label: %s" % (self.label, str(e)), exc_info=True)
@@ -169,8 +174,7 @@ class EmailRead:
         self.from_date = from_date
         self.to_date = to_date
         self.email_corp = email_corp
-        self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
-
+        
 
 
 # def enviar_email(destinatario, assunto, mensagem):
