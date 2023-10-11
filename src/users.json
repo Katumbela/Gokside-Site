@@ -31,7 +31,7 @@
 "3": 
 {"nome": "Elvira Fernando", 
 "email": "elvira.fernando@arotec.ao", 
-"senha_hash": "arotec@2023", 
+"senha_hash": "elvira@2023", 
 "empresa": "AROTEC SU", 
 "telefone": "+244928134249", 
 "estado_conta": "ativo", 
@@ -46,7 +46,7 @@
 "4": 
 {"nome": "Wilson Pembele", 
 "email": "wilson.pembele@arotec.ao", 
-"senha_hash": "arotec@2023", 
+"senha_hash": "wilson@2023", 
 "empresa": "AROTEC SU", 
 "telefone": "+244928134249", 
 "estado_conta": "ativo", 
@@ -61,7 +61,7 @@
 "5": 
 {"nome": "Durikeny Euclides", 
 "email": "durikeny.euclides@arotec.ao", 
-"senha_hash": "arotec@2023", 
+"senha_hash": "durikeny@2023", 
 "empresa": "AROTEC SU", 
 "telefone": "+244928134249", 
 "estado_conta": "ativo", 
@@ -92,7 +92,7 @@
 "7": 
 {"nome": "Cristovao Mario Cacombe", 
 "email": "cristovao.cacombe@arotec.ao", 
-"senha_hash": "arotec@2023", 
+"senha_hash": "cristovao@2023", 
 "empresa": "AROTEC SU", 
 "telefone": "+244928134249", 
 "estado_conta": "ativo", 
@@ -107,7 +107,7 @@
 "8": 
 {"nome": "Irene Carinde", 
 "email": "irene.carinde@arotec.ao", 
-"senha_hash": "arotec@2023", 
+"senha_hash": "carinde@2023", 
 "empresa": "AROTEC SU", 
 "telefone": "+244928134249", 
 "estado_conta": "ativo", 
