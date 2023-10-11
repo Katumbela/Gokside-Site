@@ -156,7 +156,7 @@ class EmailRead:
                 if self.email_corp in msg['To']:
                     emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body, "date": date_received})
 
-            return sorted(emails, key=lambda x: x['Date'], reverse=True)
+            return sorted(emails, key=lambda x: x['date'], reverse=True)
 
 
 

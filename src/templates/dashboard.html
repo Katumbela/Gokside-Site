@@ -60,6 +60,7 @@
     .btn, button, .swal2-confirm {
         background: #208ed8;
         color: white;
+        border-radius: 0!important;
     }
 
     .btn:hover,.swal2-confirm:hover, button:hover {
@@ -180,21 +181,21 @@
                         <p>Nenhum e-mail encontrado.</p>
                     {% endif %} -->
 
-                    <h1>Caixa de  </h1>
+                    <h1>Caixa de Entrada </h1>
                     {% if emails %}
                     {% for email in emails %}
-                    <div>
-                        <p><strong>Remetente:</strong> {{ email.sender }}</p>
+                    <div class="bg-light p-1 my-2 shadow-sm">
+                        <p><strong>Remetente:</strong> {{ email.sender }}
                         <!-- <p><strong>Destinatário:</strong> {{ email.recipient }}</p> -->
-                        <p><strong>Assunto:</strong> {{ email.subject }}</p>
-                        <p><strong>Mensagem:</strong> 
+                        <strong>Assunto:</strong> {{ email.subject }} <br>
+                        <strong>Mensagem:</strong> <br>
                             {{ email.body[:200] }}{% if email.body|length > 200 %}...{% endif
                             %}</p>
 
                         <!-- Botão Ver -->
                         <button class="btn btn-primary" data-toggle="modal"
                             data-target="#emailModal{{ loop.index }}">Ler E-mail</button>
-
+                                <span style="font-size: 11px;" class="float-right">Received on: {{email.date}}</span>
                         <hr>
                     </div>
 
