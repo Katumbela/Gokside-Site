@@ -41,7 +41,7 @@ app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'contact.diversishop@gmail.com'
-app.config['MAIL_PASSWORD'] = 'elac tgyl qqfe keok'
+app.config['MAIL_PASSWORD'] = 'elactgylqqfekeok'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -334,7 +334,7 @@ def register():
         senha = request.form['senha']
         senha_hash = senha
         user_id = len(load_users()) + 1  # Gere um ID único
-        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elac tgyl qqfe keok", "contact.diversishop@gmail.com")
+        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elactgylqqfekeok", "contact.diversishop@gmail.com")
         users = load_users()
         
         users[str(user_id)] = OrderedDict({
@@ -348,7 +348,7 @@ def register():
             'estado_pagamento': user.estado_pagamento,
             'data_criacao_conta': user.data_criacao_conta,
             'api_key': user.api_key,
-            'senha_app': 'elac tgyl qqfe keok',
+            'senha_app': 'elactgylqqfekeok',
             'email_pr': user.email_pr
         })
 
