@@ -120,15 +120,18 @@
         <section class="items-serv container">
             <div class="row">
                 <div class="col-12 container">
-                    <p class="d-flex justify-content-between flex-row-wrap flex-wrap">
+                    <p class="">
                         <span>
                             Suporte: <a href="tel:+244928134249">928 134 249</a> / <a
                                 href="mailto:suporte@arotec.ao">suporte@arotec.ao</a>
                         </span>
-                        <div class="d-flex">
-                            <a href="/user/spam">Spam <i class="bi bi-arrow-right"></i></a>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between">
+                                <a href="/user/spam">Spam <i class="bi bi-arrow-right"></i></a>
 
-                            <a href="/user/sent">Enviados <i class="bi bi-arrow-right"></i></a>
+                            <a class="mx-3" href="/user/sent">Enviados <i class="bi bi-arrow-right"></i></a>
+
+                            </div>
 
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                 Enviar Email</button>
@@ -176,7 +179,7 @@
                     <h1>Caixa de Entrada </h1>
                     {% if emails %}
                     {% for email in emails %}
-                    <div class="bg-light p-2 my- shadow-md rounded-3">
+                    <div class="bg-light p-2 my-3 shadow-md rounded-3">
                         <p><strong>Remetente:</strong> {{ email.sender }} <br>
                         <!-- <p><strong>Destinatário:</strong> {{ email.recipient }}</p> -->
                         <strong>Assunto:</strong> {{ email.subject }} <br>
