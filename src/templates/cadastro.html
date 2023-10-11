@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Crie uma conta | Gokside Inc</title>
+  <title>Crie uma conta | AROTEC MAIL BOX</title>
   <meta content="Entre para sua conta para ter acesso aos recursos da plataforma." name="description">
   <meta content="Login whatsapp, login, entrar, whatsapp,email, marketing, gmail" name="keywords">
 
@@ -36,7 +36,12 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
+<style>
+   body, #main, #breadcrumbs {
+    background: linear-gradient(190deg, #ffffffda, #ffffffd5), url("{{ url_for('static', filename='assets/img/2.jpg') }}") center center!important;
+    background-size: cover;
+  }
+</style>
 <body>
 
   
@@ -52,9 +57,9 @@
         
         <form action="/cadastro" method="post">
             <div class="login py-4 px-5 rounded-3 breadcrumbs">
-              <h2><img src="{{ url_for('static', filename='./assets/img/clients/g.png') }}" style="height: 3em" alt=""></h2>
-        
-              <h4>Crie sua conta</h4>
+              <h2><img src="{{ url_for('static', filename='./assets/img/clients/a.png') }}" style="height: 1.1em" alt=""></h2>
+        <br>
+              <h4>Crie uma conta</h4>
            
                 <div class="row">
                     <div class="col-12 col-sm-6">
@@ -95,7 +100,7 @@
                 </div>
             
                 <br>
-                <button type="submit" name="cadastrar" class="btn-login btn">Criar conta</button>
+                <button type="submit" name="cadastrar" class="btn-login btn">Criar conta <i class="bi bi-envelope"></i></button>
             </div>
         </form>
       </div>

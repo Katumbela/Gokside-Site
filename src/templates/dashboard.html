@@ -5,10 +5,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard {{ user.empresa }} | Gokside </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.css" integrity="sha512-eRBMRR/qeSlGYAb6a7UVwNFgXHRXa62u20w4veTi9suM2AkgkJpjcU5J8UVcoRCw0MS096e3n716Qe9Bf14EyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Dashboard {{ user.empresa }} | AROTEC MAIL BOX </title>
     <meta content="Website created by Joao Afonso Katombela, AROTEC" name="description">
     <meta content="" name="keywords">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.js" integrity="sha512-3PL7jW3xI1EjF2Hfqwv5u6nKG/BnUbWytnJDhsY/q5CbIB5XzoHNhJvgmFeVD7xgC9DbKDm+gPP9uDAAfLAZUA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Bootstrap CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.js" integrity="sha512-U6QjYGkwRKzMYhZxod7wKj4z27zzhfyw8ztl4POuIKWLMw6I4v8YJaYcwP22m4rljENkj6YxQswtRTiaMoFrgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -54,12 +57,12 @@
   ======================================================== -->
 </head>
 <style>
-    .btn {
+    .btn, button, .swal2-confirm {
         background: #208ed8;
         color: white;
     }
 
-    .btn:hover {
+    .btn:hover,.swal2-confirm:hover, button:hover {
         background: #0e70b2;
     }
 </style>
@@ -70,14 +73,14 @@
     <header id="header" class="fixed-top header-inner-pages">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="dashboard">G o k s i d e</a></h1>
+            <h1 class="logo me-auto"><a href="dashboard"><img src="{{url_for('static', filename='./assets/img/clients/logo.png')}}" style="height: 1.5em;" alt=""></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="/" class="logo me-auto"><img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto">{{user.nome}}</a></li>
-                    <li><a class="nav-link scrollto">{{user.plano }}</a></li>
+                    <li><a class="nav-link text-white scrollto">{{user.nome}}</a></li>
+                    <li><a class="nav-link text-white scrollto">{{user.plano }}</a></li>
                     <li><a class="getstarted scrollto" href="./logout">Sair</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -119,11 +122,11 @@
                     <p class="d-flex justify-content-between flex-row-wrap flex-wrap">
                         <span>
                             Suporte: <a href="tel:+244928134249">928 134 249</a> / <a
-                                href="mailto:contato@gokside.site">contato@gokside.site</a>
+                                href="mailto:suporte@arotec.ao">suporte@arotec.ao</a>
                         </span>
 
-                        <button type="button" class="btn cta-btn" data-toggle="modal" data-target="#exampleModal"
-                            data-whatever="@mdo">Enviar Email</button>
+                        <button id="enviarE" type="button" class="btn cta-btn" 
+                            >Enviar Email</button>
 
                     </p>
                     <hr>
@@ -140,20 +143,20 @@
                                 <div class="modal-body">
                                     <form id="emailForm">
                                         <label for="assunto">Assunto:</label>
-                                        <input type="text" id="assunto" name="assunto" required><br>
+                                        <input  class="form-control" type="text" id="assunto" name="assunto" required><br>
                             
                                         <label for="destinatario">Destinatário:</label>
-                                        <input type="text" id="destinatario" name="destinatario" required><br>
+                                        <input class="form-control"  type="text" id="destinatario" name="destinatario" required><br>
                             
                                         <label for="mensagem">Mensagem:</label>
-                                        <textarea id="mensagem" name="mensagem" required></textarea><br>
+                                        <textarea  class="form-control" id="mensagem" name="mensagem" required></textarea><br>
                             
-                                        <button type="button" id="sendButton">Enviar</button>
+                                        <button type="button" id="sendButton" class="btn btn-primary">Enviar</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn btn-primary">Enviar</button>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -274,30 +277,131 @@
 
     
 <script>
-    document.getElementById('sendButton').addEventListener('click', function () {
-        var form = document.getElementById('emailForm');
-        var formData = new FormData(form);
+//     document.getElementById('sendButton').addEventListener('click', function () {
+//         var form = document.getElementById('emailForm');
+//         var formData = new FormData(form);
 
-        var jsonData = {};
-        formData.forEach(function (value, key) {
-            jsonData[key] = value;
-        });
+//         var jsonData = {};
+//         formData.forEach(function (value, key) {
+//             jsonData[key] = value;
+//         });
 
-        fetch('/seu-endpoint-de-envio', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(jsonData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.resposta);
-        })
-        .catch(error => {
-            console.error('Erro ao enviar os dados:', error);
-        });
+//         fetch('/send_email', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(jsonData)
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             alert(data.resposta);
+//         })
+//         .catch(error => {
+//             console.error('Erro ao enviar os dados:', error);
+//         });
+//     });
+
+//     Swal.fire({
+//   title: 'Enviar E-mail',
+//   html:
+//     '<form id="emailForm">' +
+//     '<label for="assunto">Assunto:</label>' +
+//     '<input class="swal2-input" id="assunto" name="assunto" required>' +
+//     '<label for="destinatario">Destinatário:</label>' +
+//     '<input class="swal2-input" id="destinatario" name="destinatario" required>' +
+//     '<label for="mensagem">Mensagem:</label>' +
+//     '<textarea class="swal2-input" id="mensagem" name="mensagem" required></textarea>' +
+//     '</form>',
+//   confirmButtonText: 'Enviar',
+//   showCancelButton: true,
+//   preConfirm: () => {
+//     var form = document.getElementById('emailForm');
+//     var formData = new FormData(form);
+
+//     var jsonData = {};
+//     formData.forEach(function (value, key) {
+//       jsonData[key] = value;
+//     });
+
+//     return fetch('/send_email', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(jsonData)
+//     })
+//       .then(response => {
+//         if (!response.ok) {
+//           throw new Error(response.statusText);
+//         }
+//         return response.json();
+//       })
+//       .catch(error => {
+//         Swal.showValidationMessage(`Erro ao enviar os dados: ${error}`);
+//       });
+//   },
+//   allowOutsideClick: () => !Swal.isLoading()
+// }).then((result) => {
+//   if (result.isConfirmed) {
+//     Swal.fire({
+//       title: 'Resposta do Servidor',
+//       text: result.value.resposta
+//     });
+//   }
+// });
+
+$("#enviarE").click(function () {
+    Swal.fire({
+  title: 'Enviar E-mail',
+  html:
+    '<form id="emailForm" class="text-start">' +
+    '<label for="assunto">Assunto:</label>' +
+    '<input class=" form-control" id="assunto" name="assunto" required>' +
+    '<label for="destinatario">Destinatário:</label>' +
+    '<input class=" form-control" id="destinatario" name="destinatario" required>' +
+    '<label for="mensagem">Mensagem:</label>' +
+    '<textarea class=" form-control" id="mensagem" name="mensagem" required></textarea>' +
+    '</form>',
+  confirmButtonText: 'Enviar',
+  showCancelButton: true,
+  preConfirm: () => {
+    var form = document.getElementById('emailForm');
+    var formData = new FormData(form);
+
+    var jsonData = {};
+    formData.forEach(function (value, key) {
+      jsonData[key] = value;
     });
+
+    return fetch('/send_email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .catch(error => {
+        Swal.showValidationMessage(`Erro ao enviar os dados: ${error}`);
+      });
+  },
+  allowOutsideClick: () => !Swal.isLoading()
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: 'Resposta do Servidor',
+      text: result.value.resposta
+    });
+  }
+});
+
+})
 </script>
 </body>
 

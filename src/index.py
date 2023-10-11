@@ -9,7 +9,7 @@
 ###
 import logging
 logging.basicConfig(level=logging.DEBUG)  # Isso configura o nível de log para DEBUG
-
+from flask_mail import  Mail, Message
 from flask import Flask, render_template, request, jsonify
 from email.utils import formataddr
 import smtplib
@@ -35,6 +35,16 @@ import config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
+
+# cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'contact.diversishop@gmail.com'
+app.config['MAIL_PASSWORD'] = 'elac tgyl qqfe keok'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 
 login_manager = LoginManager(app)
@@ -162,7 +172,7 @@ class EmailRead:
 
 
 
-def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
+def enviar_mail(usuario, senha, remetente, destinatario, assunto, mensagem):
     # Configuração do servidor SMTP do Gmail
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
@@ -189,16 +199,16 @@ def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
 def index():
     # r1 = EmailRead()
     # data = r1.read_emails()
-    return render_template('index.html', )
+    return render_template('login.html', )
 
 @app.route('/pagina/<parametro>')
 def pagina(parametro):
     if parametro == "pack1":
         pacote = "PACOTE INDIVIDUAL"
     elif parametro == "pack2":
-        pacote = "PACOTE BUISINESS"
+        pacote = "PACOTE BUSINESS"
     elif parametro == "pack3":
-        pacote = "PACOTE GOK"
+        pacote = "PACOTE STARTUP"
     return render_template('cadastro.html', parametro=pacote)
 
 
@@ -351,29 +361,28 @@ def register():
 
 
 
-@app.route('/seu-endpoint-de-envio', methods=['POST'])
-def enviar_email():
+@app.route('/send_email', methods=['POST'])
+def send_email():
     data = request.get_json()
 
     # Lógica para enviar o e-mail com os dados recebidos
-    assunto = data.get('remetente')
+    assunto = data.get('assunto')
     destinatario = data.get('destinatario')
     mensagem = data.get('mensagem')
 
     # Envia o e-mail usando o Flask-Mail
     try:
             
-        # Exemplo de uso
-        usuario_smtp = current_user.email_pr
-        senha_smtp = current_user.senha_app
-        remetente_desejado = formataddr((current_user.nome, current_user.email))
-        
-        enviar_email(usuario_smtp, senha_smtp, remetente_desejado, destinatario, assunto, mensagem)
+            msg = Message(assunto, sender = current_user.email, recipients = [destinatario])
+            msg.body = mensagem
+            mail.send(msg)
+         
+            return jsonify({'resposta': "Email enviado com Sucesso!"})
 
     except Exception as e:
-        resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
+                resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
 
-    return jsonify({'resposta': resposta_do_servidor})
+                return jsonify({'resposta': resposta_do_servidor})
 
 
 

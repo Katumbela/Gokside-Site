@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Entrar para sua conta | Gokside Inc</title>
+  <title>Entrar para sua conta | AROTEC MAIL BOX</title>
   <meta content="Entre para sua conta para ter acesso aos recursos da plataforma." name="description">
   <meta content="Login whatsapp, login, entrar, whatsapp,email, marketing, gmail" name="keywords">
 
@@ -39,7 +39,12 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
+<style>
+  body, #main, #breadcrumbs {
+    background: linear-gradient(190deg, #ffffffda, #ffffffd5), url("{{ url_for('static', filename='assets/img/2.jpg') }}") center center!important;
+    background-size: cover;
+  }
+</style>
 <body>
 
   
@@ -49,20 +54,20 @@
     <section id="breadcrumbs" class="breadcrumbs bg-white">
       <div class="container text-center">
 
-       <a style="align-self: start; float: left;" href="/">Voltar</a></li>
+       <!-- <a style="align-self: start; float: left;" href="/">Voltar</a></li> -->
         
         <form action="/login" method="post">
         <div class="login py-4 px-5 rounded-3 breadcrumbs">
-          <h2><img src="{{ url_for('static', filename='./assets/img/clients/g.png') }}" style="height: 3em" alt=""></h2>
-        <br>
+          <h2><img src="{{ url_for('static', filename='./assets/img/clients/a.png') }}" style="height: 1.1em" alt=""></h2>
         
-            <input type="email" name="email" placeholder="Seu telefone" class="input-1 form-control my-1"> <br>
+       <h2>Mail Box </h2>
+            <input type="email" name="email" placeholder="Seu email" class="input-1 form-control my-1"> <br>
             <input type="password" name="senha" placeholder="Palavra passe" class="input-1 form-control my-1">
             <br>
             <button type="submit" name="entrar" class="btn-login btn">Entrar</button>
 
             <center>
-              <span class="text-secondary fs-6">Não possui uma conta ? <a href="/#princing">crie uma conta</a></span>
+              <span class="text-secondary fs-6">Não possui uma conta ? <a href="/pagina/pack3">crie uma conta</a></span>
             </center>
         </div>
       </form>
