@@ -88,7 +88,7 @@ def load_user(user_id):
     return None
 
 class EmailRead:
-     
+    
     def read_emails(self):
         try:
             mail = imaplib.IMAP4_SSL(self.smtp_server)
@@ -208,7 +208,8 @@ def inbox():
         # Obtém a data atual
     data_atual = datetime.now()
     # Formata a data no formato '10-Apr-2023'
-    data_formatada = data_atual.strftime('%d-%b-%Y')
+    # data_formatada = data_atual.strftime('%d-%b-%Y')
+    data_formatada = '1-Jan-2023'
 
     r1 = EmailRead(
         email= current_user.email_pr,
@@ -282,7 +283,8 @@ def perfil():
         #  Obtém a data atual
     data_atual = datetime.now()
     # Formata a data no formato '10-Apr-2023'
-    data_formatada = data_atual.strftime('%d-%b-%Y')
+    # data_formatada = data_atual.strftime('%d-%b-%Y')
+    data_formatada = '1-jan-2023'
 
     r1 = EmailRead(
         email=current_user.email_pr,
@@ -322,7 +324,7 @@ def register():
         senha = request.form['senha']
         senha_hash = generate_password_hash(senha, method='sha256')
         user_id = len(load_users()) + 1  # Gere um ID único
-        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elactgylqqfekeok", "contact.diversishop@gmail.com")
+        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elac tgyl qqfe keok", "contact.diversishop@gmail.com")
         users = load_users()
         
         users[str(user_id)] = OrderedDict({
@@ -336,7 +338,7 @@ def register():
             'estado_pagamento': user.estado_pagamento,
             'data_criacao_conta': user.data_criacao_conta,
             'api_key': user.api_key,
-            'senha_app': 'elactgylqqfekeok',
+            'senha_app': 'elac tgyl qqfe keok',
             'email_pr': user.email_pr
         })
 
@@ -354,7 +356,7 @@ def enviar_email():
     data = request.get_json()
 
     # Lógica para enviar o e-mail com os dados recebidos
-    assunto = data.get('assunto')
+    assunto = data.get('remetente')
     destinatario = data.get('destinatario')
     mensagem = data.get('mensagem')
 
@@ -366,15 +368,10 @@ def enviar_email():
         senha_smtp = current_user.senha_app
         remetente_desejado = formataddr((current_user.nome, current_user.email))
         
-      
-
         enviar_email(usuario_smtp, senha_smtp, remetente_desejado, destinatario, assunto, mensagem)
-
-        return jsonify({'resposta': "Email enviado com sucesso!"})
 
     except Exception as e:
         resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
-        print(resposta_do_servidor)
 
     return jsonify({'resposta': resposta_do_servidor})
 

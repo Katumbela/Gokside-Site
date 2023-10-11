@@ -162,6 +162,21 @@
 
 
                 <div class="col-12">
+                    <!-- <h1>Caixa de Entrada</h1>
+                    {% if emails %}
+                        {% for email in emails %}
+                            <div>
+                                <p><strong>Remetente:</strong> {{ email.sender }}</p>
+                                <p><strong>Destinatário:</strong> {{ email.recipient }}</p>
+                                <p><strong>Assunto:</strong> {{ email.subject }}</p>
+                                <p><strong>Corpo:</strong> {{ email.body }}</p>
+                                <hr>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Nenhum e-mail encontrado.</p>
+                    {% endif %} -->
+
                     <h1>Caixa de Entrada</h1>
                     {% if emails %}
                     {% for email in emails %}
@@ -169,7 +184,8 @@
                         <p><strong>Remetente:</strong> {{ email.sender }}</p>
                         <!-- <p><strong>Destinatário:</strong> {{ email.recipient }}</p> -->
                         <p><strong>Assunto:</strong> {{ email.subject }}</p>
-                        <p><strong>Mensagem:</strong> {{ email.body[:200] }}{% if email.body|length > 200 %}...{% endif
+                        <p><strong>Mensagem:</strong> 
+                            {{ email.body[:200] }}{% if email.body|length > 200 %}...{% endif
                             %}</p>
 
                         <!-- Botão Ver -->
