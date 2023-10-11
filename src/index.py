@@ -99,6 +99,124 @@ def load_user(user_id):
     return None
 
 class EmailRead:
+
+    def read_spam_emails(self):
+        try:
+            mail = imaplib.IMAP4_SSL(self.smtp_server)
+            self.logger.debug(f"Trying to login with email: {self.email_address}")
+            mail.login(self.email_address, self.password)
+            self.logger.debug(f"Login successful for email: {self.email_address}")
+
+            # Substitua 'Spam' pelo nome real da sua caixa de spam
+            mail.select("Spam", readonly=True)
+
+            result, data = mail.uid('search', None, 'ALL')
+            if result == 'OK':
+                self.logger.info('Processing spam emails...')
+            else:
+                self.logger.error("Reading error", exc_info=True)
+                sys.exit(0)
+
+            ids = data[0].split()
+            if len(ids) == 0:
+                self.logger.info("No spam emails found.")
+
+            emails = []
+
+            self.logger.debug("Processing email IDs...")
+            for x in ids:
+                self.logger.debug(f"Processing email ID: {x}")
+                result, data = mail.uid('fetch', x, "(RFC822)")
+                raw_email = data[0][1]
+                msg = email.message_from_bytes(raw_email)
+
+                date_received = msg.get('Date')
+                date_received_datetime = datetime.strptime(date_received, "%a, %d %b %Y %H:%M:%S %z")
+
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding or 'utf-8')
+
+                body = ""
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        charset = part.get_content_charset()
+                        body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
+
+                self.logger.debug(f"Found spam email: Subject: {subject}, Body: {body}")
+
+                sender = msg.get("From", "")
+                recipient = msg.get("To", "")
+
+                # Adicione a verificação para incluir apenas e-mails do usuário logado
+                if self.email_corp in msg['To']:
+                    emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body, "date": date_received_datetime})
+
+            return sorted(emails, key=lambda x: x['date'], reverse=True)
+
+        except Exception as e:
+            self.logger.error("Error in reading spam emails: %s" % str(e), exc_info=True)
+            return []
+
+
+    def read_sent_emails(self):
+        try:
+            mail = imaplib.IMAP4_SSL(self.smtp_server)
+            self.logger.debug(f"Trying to login with email: {self.email_address}")
+            mail.login(self.email_address, self.password)
+            self.logger.debug(f"Login successful for email: {self.email_address}")
+
+            # Selecione a caixa de saída (Sent)
+            mail.select("Sent", readonly=True)
+
+            result, data = mail.uid('search', None, 'ALL')
+            if result == 'OK':
+                self.logger.info('Processing sent emails...')
+            else:
+                self.logger.error("Reading error", exc_info=True)
+                sys.exit(0)
+
+            ids = data[0].split()
+            if len(ids) == 0:
+                self.logger.info("No sent emails found.")
+
+            emails = []
+
+            self.logger.debug("Processing email IDs...")
+            for x in ids:
+                self.logger.debug(f"Processing email ID: {x}")
+                result, data = mail.uid('fetch', x, "(RFC822)")
+                raw_email = data[0][1]
+                msg = email.message_from_bytes(raw_email)
+
+                date_received = msg.get('Date')
+                date_received_datetime = datetime.strptime(date_received, "%a, %d %b %Y %H:%M:%S %z")
+
+                subject, encoding = decode_header(msg["Subject"])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding or 'utf-8')
+
+                body = ""
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        charset = part.get_content_charset()
+                        body = part.get_payload(decode=True).decode(charset or 'utf-8', 'ignore')
+
+                self.logger.debug(f"Found email: Subject: {subject}, Body: {body}")
+
+                sender = msg.get("From", "")
+                recipient = msg.get("To", "")
+
+                # Adicione a verificação para incluir apenas e-mails do usuário logado
+                if self.email_corp in msg['To']:
+                    emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body, "date": date_received_datetime})
+
+            return sorted(emails, key=lambda x: x['date'], reverse=True)
+
+        except Exception as e:
+            self.logger.error("Error in reading sent emails: %s" % str(e), exc_info=True)
+            return []
+
     
     def read_emails(self):
         try:
@@ -276,6 +394,52 @@ def login():
         else:
             flash('Usuário não encontrado. Por favor, tente novamente.', 'danger')
     return render_template('login.html')
+
+@app.route('/user/sent')
+@login_required
+def sent():
+        #  Obtém a data atual
+    data_atual = datetime.now()
+    # Formata a data no formato '10-Apr-2023'
+    # data_formatada = data_atual.strftime('%d-%b-%Y')
+    data_formatada = '1-jan-2023'
+
+    r1 = EmailRead(
+        email=current_user.email_pr,
+        password=current_user.senha_app,
+        label='Inbox',
+        from_date=data_formatada,
+        to_date='1-May-2024',
+        email_corp=current_user.email
+    )
+
+    data = r1.read_sent_emails()
+
+    return render_template('sent_emails.html', user=current_user, emails = data)
+
+
+@app.route('/user/spam')
+@login_required
+def spam():
+        #  Obtém a data atual
+    data_atual = datetime.now()
+    # Formata a data no formato '10-Apr-2023'
+    # data_formatada = data_atual.strftime('%d-%b-%Y')
+    data_formatada = '1-jan-2023'
+
+    r1 = EmailRead(
+        email=current_user.email_pr,
+        password=current_user.senha_app,
+        label='Inbox',
+        from_date=data_formatada,
+        to_date='1-May-2024',
+        email_corp=current_user.email
+    )
+
+    data = r1.read_spam_emails()
+
+    return render_template('spam_emails.html', user=current_user, emails = data)
+
 
 @app.route('/user/dashboard')
 @login_required

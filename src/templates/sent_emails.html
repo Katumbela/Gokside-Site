@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.css" integrity="sha512-eRBMRR/qeSlGYAb6a7UVwNFgXHRXa62u20w4veTi9suM2AkgkJpjcU5J8UVcoRCw0MS096e3n716Qe9Bf14EyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Dashboard {{ user.empresa }} | AROTEC MAIL BOX </title>
+    <title>Emails Enviados Por sí {{ user.empresa }} | AROTEC MAIL BOX </title>
     <meta content="Website created by Joao Afonso Katombela, AROTEC" name="description">
     <meta content="" name="keywords">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.js" integrity="sha512-3PL7jW3xI1EjF2Hfqwv5u6nKG/BnUbWytnJDhsY/q5CbIB5XzoHNhJvgmFeVD7xgC9DbKDm+gPP9uDAAfLAZUA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -125,6 +125,7 @@
                             Suporte: <a href="tel:+244928134249">928 134 249</a> / <a
                                 href="mailto:suporte@arotec.ao">suporte@arotec.ao</a>
                         </span>
+
                         <div class="d-flex">
                             <a href="/user/spam">Spam <i class="bi bi-arrow-right"></i></a>
 
@@ -133,7 +134,6 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                 Enviar Email</button>
                             </div>
-
                     </p>
                     <hr>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -173,10 +173,10 @@
                 <div class="col-12">
                   
 
-                    <h1>Caixa de Entrada </h1>
+                    <h1>Emails Enviados por sí </h1>
                     {% if emails %}
                     {% for email in emails %}
-                    <div class="bg-light p-2 my- shadow-md rounded-3">
+                    <div class="bg-light p-2 my-3 shadow-md rounded-3">
                         <p><strong>Remetente:</strong> {{ email.sender }} <br>
                         <!-- <p><strong>Destinatário:</strong> {{ email.recipient }}</p> -->
                         <strong>Assunto:</strong> {{ email.subject }} <br>
