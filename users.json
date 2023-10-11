@@ -1,1 +1,123 @@
-{"1": {"nome": "Jo\u00e3o Afonso Katombela", "email": "joao.katumbela@arotec.ao", "senha_hash": "jgluewhazvnkddjp", "empresa": "AROTEC SU", "telefone": "+244928134249", "estado_conta": "ativo", "plano": "PACOTE BUSINESS", "estado_pagamento": "pendente", "data_criacao_conta": "10/10/2023", "api_key": "sha256$FiAVwHq5KgTS77zL$1063a3ff80b6811e2d731a422", "senha_app": "elac tgyl qqfe keok"}}
+{
+    
+    "1": 
+{"nome": "AROTEC (SU)", 
+"email": "geral@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE BUISINESS", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$QxMnZoajweFlwyCe$d8f8b33ad9e31e058668aae1687720b3fd0dec726262fc247414a0441eace3aa", "senha_app": "elac tgyl qqfe keok", "email_pr": "contact.diversishop@gmail.com"}, 
+
+
+"2": 
+{"nome": "Jo\u00e3o Afonso Katombela", 
+"email": "ja3328173@gmail.com", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+"3": 
+{"nome": "Elvira Fernando", 
+"email": "elvira.fernando@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "Pago", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+"4": 
+{"nome": "Wilson Pembele", 
+"email": "wilson.pembele@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+"5": 
+{"nome": "Durikeny Euclides", 
+"email": "durikeny.euclides@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+
+"6": 
+{"nome": "Jonilson Correia", 
+"email": "jonilson.correia@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+"7": 
+{"nome": "Cristovao Mario Cacombe", 
+"email": "cristovao.cacombe@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+},
+
+"8": 
+{"nome": "Irene Carinde", 
+"email": "irene.carinde@arotec.ao", 
+"senha_hash": "1234", 
+"empresa": "AROTEC SU", 
+"telefone": "+244928134249", 
+"estado_conta": "ativo", 
+"plano": "PACOTE STARTUP", 
+"estado_pagamento": "pendente", 
+"data_criacao_conta": "2023", 
+"api_key": "sha256$Yiceg7O69R40NBB3$a6b18b1f7ee542028c2d1a18f14caca60b187d851c5182c742d5bc16dbe9f475", 
+"senha_app": "elac tgyl qqfe keok", 
+"email_pr": "contact.diversishop@gmail.com"
+}
+
+
+}

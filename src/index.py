@@ -275,7 +275,7 @@ def login():
         if user:
             logging.debug(f'Usuário encontrado: {user.email}')
             logging.debug(f'Senha do usuário: {user.senha_hash}')
-            if check_password_hash(user.senha_hash, senha):
+            if user.senha_hash == senha:
                 login_user(user)
                 flash('Login bem-sucedido!', 'success')
                 print(current_user)
@@ -332,7 +332,7 @@ def register():
         plano = request.form['plano']
         telefone = request.form['telefone']
         senha = request.form['senha']
-        senha_hash = generate_password_hash(senha, method='sha256')
+        senha_hash = senha
         user_id = len(load_users()) + 1  # Gere um ID único
         user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elac tgyl qqfe keok", "contact.diversishop@gmail.com")
         users = load_users()
