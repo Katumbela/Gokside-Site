@@ -153,7 +153,8 @@ class EmailRead:
                 if sender == self.email_corp or recipient == self.email_corp:
                     emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body})
 
-            return emails
+            return sorted(emails, key=lambda x: x['data'], reverse=True)
+
 
         except Exception as e:
             self.logger.error("Error in reading your %s label: %s" % (self.label, str(e)), exc_info=True)
