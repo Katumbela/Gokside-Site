@@ -38,13 +38,13 @@ app.config['SECRET_KEY'] = 'Gokside_2023_katumbela'
 
 # cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'contact.diversishop@gmail.com'
-app.config['MAIL_PASSWORD'] = 'elactgylqqfekeok'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+# app.config['MAIL_SERVER']='smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USERNAME'] = 'contact.diversishop@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'niwe tbir noqh owxz'
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+# mail = Mail(app)
 
 
 login_manager = LoginManager(app)
@@ -171,27 +171,28 @@ class EmailRead:
         self.command = '(SINCE "' + self.from_date + '" BEFORE "' + self.to_date + '")'
 
 
-
-def enviar_mail(usuario, senha, remetente, destinatario, assunto, mensagem):
-    # Configuração do servidor SMTP do Gmail
+def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
 
-    # Criação da mensagem
     msg = MIMEMultipart()
-    msg['From'] = remetente  # Configura o remetente desejado
+    msg['From'] = remetente
     msg['To'] = destinatario
     msg['Subject'] = assunto
-
-    # Adiciona o corpo da mensagem
     msg.attach(MIMEText(mensagem, 'plain'))
 
-    # Conexão e envio usando SMTP
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
-        server.starttls()
-        server.login(usuario, senha)
-        server.sendmail(remetente, destinatario, msg.as_string())
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(usuario, senha)
+            server.sendmail(remetente, destinatario, msg.as_string())
+        print("E-mail enviado com sucesso!")
+        return jsonify({'resposta': "Email enviado com Sucesso!"})
 
+    except Exception as e:
+        print(f'Erro ao enviar o e-mail: {str(e)}')
+        resposta_do_servidor = f'Erro ao enviar o e-mail: {str(e)}'
+        return jsonify({'resposta': resposta_do_servidor})
 
 
 
@@ -262,6 +263,7 @@ def profile(user_id):
             'senhap_app': user.senha_app,
             'email_pr': user.email_pr
         }
+
         save_users(users)
     return render_template('profile.html', user=user)
 
@@ -334,7 +336,7 @@ def register():
         senha = request.form['senha']
         senha_hash = senha
         user_id = len(load_users()) + 1  # Gere um ID único
-        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "elactgylqqfekeok", "contact.diversishop@gmail.com")
+        user = User(user_id, nome, email, senha_hash, empresa, telefone, 'ativo', plano, 'pendente', "2023", senha_hash, "niwe tbir noqh owxz", "contact.diversishop@gmail.com")
         users = load_users()
         
         users[str(user_id)] = OrderedDict({
@@ -348,7 +350,7 @@ def register():
             'estado_pagamento': user.estado_pagamento,
             'data_criacao_conta': user.data_criacao_conta,
             'api_key': user.api_key,
-            'senha_app': 'elactgylqqfekeok',
+            'senha_app': 'niwe tbir noqh owxz',
             'email_pr': user.email_pr
         })
 
@@ -373,10 +375,15 @@ def send_email():
     # Envia o e-mail usando o Flask-Mail
     try:
             
-            msg = Message(assunto, sender = current_user.email, recipients = [destinatario])
-            msg.body = mensagem
-            mail.send(msg)
-         
+                    
+            # Exemplo de uso
+            usuario_smtp = 'contact.diversishop@gmail.com'
+            senha_smtp = 'niwe tbir noqh owxz'
+            remetente_desejado = formataddr((current_user.nome, current_user.email))
+            
+
+            enviar_email(usuario_smtp, senha_smtp, remetente_desejado, destinatario, assunto, mensagem)
+
             return jsonify({'resposta': "Email enviado com Sucesso!"})
 
     except Exception as e:

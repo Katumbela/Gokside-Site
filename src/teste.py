@@ -25,7 +25,7 @@ def enviar_email(usuario, senha, remetente, destinatario, assunto, mensagem):
 
 # Exemplo de uso
 usuario_smtp = 'contact.diversishop@gmail.com'
-senha_smtp = 'elactgylqqfekeok'
+senha_smtp = 'niwe tbir noqh owxz'
 remetente_desejado = formataddr(('AROTEC SU', 'geral@arotec.ao'))
 destinatario = 'ja3328173@gmail.com'
 assunto = 'Assunto do E-mail'
