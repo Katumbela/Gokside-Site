@@ -129,13 +129,13 @@ class EmailRead:
                 raw_email = data[0][1]
                 msg = email.message_from_bytes(raw_email)
 
-                self.logger.debug(f"From: {msg['From']}")
-                self.logger.debug(f"To: {msg['To']}")
-                self.logger.debug(f"Subject: {msg['Subject']}")
-                self.logger.debug(f"Content-Type: {msg.get_content_type()}")
+                # self.logger.debug(f"From: {msg['From']}")
+                # self.logger.debug(f"To: {msg['To']}")
+                # self.logger.debug(f"Subject: {msg['Subject']}")
+                # self.logger.debug(f"Content-Type: {msg.get_content_type()}")
 
                 date_received = msg.get('Date')
-                self.logger.debug(f"Date Received: {date_received}")
+                # self.logger.debug(f"Date Received: {date_received}")
 
                 subject, encoding = decode_header(msg["Subject"])[0]
                 if isinstance(subject, bytes):
@@ -156,7 +156,7 @@ class EmailRead:
                 if self.email_corp in msg['To']:
                     emails.append({"sender": sender, "recipient": recipient, "subject": subject, "body": body, "date": date_received})
 
-                return sorted(emails, key=lambda x: x['Date'], reverse=True)
+            return sorted(emails, key=lambda x: x['Date'], reverse=True)
 
 
 
